@@ -1,33 +1,42 @@
 {
   "audio_file": "audio/samples/Arabic_english_mix_optimized.wav",
-  "segment_count": 3,
+  "segment_count": 4,
   "transcribed_segments": [
     {
-      "language": "en-us",
+      "language": "en-US",
       "start_time": 0,
       "duration": 54990000,
       "start_sec": 0.0,
       "duration_sec": 5.499,
       "transcript": "",
-      "error": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5004/speech/recognition/interactive/cognitiveservices/v1?language=en-us\nX-ConnectionId: 6dd41c04e6b74769a1195e2a2dd6e5d3 SessionId: 6dd41c04e6b74769a1195e2a2dd6e5d3"
+      "error": "Canceled (unknown): Unknown details"
     },
     {
-      "language": "ar-sa",
+      "language": "ar-SA",
       "start_time": 54990000,
       "duration": 30000000,
       "start_sec": 5.499,
       "duration_sec": 3.0,
       "transcript": "",
-      "error": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5005/speech/recognition/interactive/cognitiveservices/v1?language=ar-sa\nX-ConnectionId: 00987517986245249b7459c1c8c9ea1d SessionId: 00987517986245249b7459c1c8c9ea1d"
+      "error": "Canceled (unknown): Unknown details"
     },
     {
-      "language": "en-us",
+      "language": "en-US",
       "start_time": 84990000,
       "duration": 30000000,
       "start_sec": 8.499,
       "duration_sec": 3.0,
       "transcript": "",
-      "error": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5004/speech/recognition/interactive/cognitiveservices/v1?language=en-us\nX-ConnectionId: 0d1bde5af31a46a58e5c3cdb24a39c86 SessionId: 0d1bde5af31a46a58e5c3cdb24a39c86"
+      "error": "Canceled (unknown): Unknown details"
+    },
+    {
+      "language": "ar-SA",
+      "start_time": 114990000,
+      "duration": 36010000,
+      "start_sec": 11.499,
+      "duration_sec": 3.601,
+      "transcript": "",
+      "error": "Canceled (unknown): Unknown details"
     }
   ],
   "full_transcript": ""

@@ -106,7 +106,7 @@ Start-ContainerIfMissing -Name $lidName -DockerArgs $lidArgs
 $enArgs = @(
     'run', $detachFlag, '--name', $enName,
     '-p', "$enPort`:$enPort",  # Map to the same port inside the container
-    '--memory', '2g', '--cpus', '2',
+    '--memory', '4g', '--cpus', '4',
     '-e', 'Eula=accept',
     '-e', "Billing=$billing",
     '-e', "ApiKey=$key",
@@ -119,7 +119,7 @@ Start-ContainerIfMissing -Name $enName -DockerArgs $enArgs
 $arArgs = @(
     'run', $detachFlag, '--name', $arName,
     '-p', "$arPort`:$arPort",  # Map to the same port inside the container
-    '--memory', '2g', '--cpus', '2',
+    '--memory', '4g', '--cpus', '4',
     '-e', 'Eula=accept',
     '-e', "Billing=$billing",
     '-e', "ApiKey=$key",
