@@ -1,0 +1,11 @@
+[INFO] Starting container-based language detection test
+[INFO] Testing language detection with container: ws://localhost:5003
+[INFO] Using audio file: audio/samples/Arabic_english_mix_optimized.wav
+[INFO] Candidate languages: ['en-US', 'ar-SA']
+[INFO] Successfully created SourceLanguageRecognizer
+[INFO] Starting continuous recognition
+[INFO] Session started: d0cf029843494faca7cd0d4947e47ba0
+[INFO] Waiting for recognition results...
+[INFO] Session stopped: d0cf029843494faca7cd0d4947e47ba0
+[INFO] Stopping recognition
+[ERROR] Test failed

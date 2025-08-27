@@ -1,0 +1,61 @@
+2025-08-27 14:16:49,793 [INFO] === COMPREHENSIVE LANGUAGE IDENTIFICATION TEST ===
+2025-08-27 14:16:49,793 [INFO] Testing basic speech recognition to verify audio...
+2025-08-27 14:16:49,797 [INFO] Running speech recognition with English STT container...
+2025-08-27 14:16:51,265 [INFO] Speech recognized: Hello, thank you for calling. How can I help you today?
+2025-08-27 14:16:51,319 [INFO] Testing language detection...
+2025-08-27 14:16:51,319 [INFO] 
+=== TEST 1: Default AtStart mode ===
+2025-08-27 14:16:51,320 [INFO] Testing with host: ws://localhost:5003
+2025-08-27 14:16:51,321 [INFO] Language mode: AtStart
+2025-08-27 14:16:51,321 [INFO] Languages: ['en-US', 'ar-SA']
+2025-08-27 14:16:51,321 [INFO] Audio file: C:\Users\amantara\OneDrive - Microsoft\Documents\projects\Language_identification\audio\samples\Arabic_english_mix_optimized.wav
+2025-08-27 14:16:51,322 [INFO] Created SpeechConfig successfully
+2025-08-27 14:16:51,322 [INFO] Set language detection mode to AtStart
+2025-08-27 14:16:51,324 [INFO] Created AudioConfig successfully
+2025-08-27 14:16:51,325 [INFO] Created AutoDetectSourceLanguageConfig with languages: ['en-US', 'ar-SA']
+2025-08-27 14:16:51,327 [INFO] Created SourceLanguageRecognizer successfully
+2025-08-27 14:16:51,328 [INFO] Starting continuous recognition...
+2025-08-27 14:16:52,497 [INFO] Session stopped
+2025-08-27 14:16:52,831 [INFO] Stopping recognition...
+2025-08-27 14:16:52,837 [INFO] 
+=== TEST 2: Without ws:// prefix ===
+2025-08-27 14:16:52,837 [INFO] Testing with host: localhost:5003
+2025-08-27 14:16:52,837 [INFO] Language mode: AtStart
+2025-08-27 14:16:52,837 [INFO] Languages: ['en-US', 'ar-SA']
+2025-08-27 14:16:52,837 [INFO] Audio file: C:\Users\amantara\OneDrive - Microsoft\Documents\projects\Language_identification\audio\samples\Arabic_english_mix_optimized.wav
+2025-08-27 14:16:52,839 [INFO] Created SpeechConfig successfully
+2025-08-27 14:16:52,839 [INFO] Set language detection mode to AtStart
+2025-08-27 14:16:52,839 [INFO] Created AudioConfig successfully
+2025-08-27 14:16:52,839 [INFO] Created AutoDetectSourceLanguageConfig with languages: ['en-US', 'ar-SA']
+2025-08-27 14:16:52,840 [INFO] Created SourceLanguageRecognizer successfully
+2025-08-27 14:16:52,841 [INFO] Starting continuous recognition...
+2025-08-27 14:16:53,002 [INFO] Session stopped
+2025-08-27 14:16:53,348 [INFO] Stopping recognition...
+2025-08-27 14:16:53,353 [INFO] 
+=== TEST 3: Single language only ===
+2025-08-27 14:16:53,354 [INFO] Testing with host: ws://localhost:5003
+2025-08-27 14:16:53,354 [INFO] Language mode: AtStart
+2025-08-27 14:16:53,354 [INFO] Languages: ['en-US']
+2025-08-27 14:16:53,355 [INFO] Audio file: C:\Users\amantara\OneDrive - Microsoft\Documents\projects\Language_identification\audio\samples\Arabic_english_mix_optimized.wav
+2025-08-27 14:16:53,355 [INFO] Created SpeechConfig successfully
+2025-08-27 14:16:53,355 [INFO] Set language detection mode to AtStart
+2025-08-27 14:16:53,356 [INFO] Created AudioConfig successfully
+2025-08-27 14:16:53,356 [INFO] Created AutoDetectSourceLanguageConfig with languages: ['en-US']
+2025-08-27 14:16:53,358 [INFO] Created SourceLanguageRecognizer successfully
+2025-08-27 14:16:53,358 [INFO] Starting continuous recognition...
+2025-08-27 14:16:54,496 [INFO] Session stopped
+2025-08-27 14:16:54,861 [INFO] Stopping recognition...
+2025-08-27 14:16:54,867 [INFO] 
+=== TEST 4: Alternative audio file ===
+2025-08-27 14:16:54,867 [INFO] Testing with host: ws://localhost:5003
+2025-08-27 14:16:54,867 [INFO] Language mode: AtStart
+2025-08-27 14:16:54,868 [INFO] Languages: ['en-US', 'ar-SA']
+2025-08-27 14:16:54,868 [INFO] Audio file: C:\Users\amantara\OneDrive - Microsoft\Documents\projects\Language_identification\audio\samples\Scenario1_20250323_S1056_New Postpaid Activation1.wav
+2025-08-27 14:16:54,869 [INFO] Created SpeechConfig successfully
+2025-08-27 14:16:54,869 [INFO] Set language detection mode to AtStart
+2025-08-27 14:16:54,869 [INFO] Created AudioConfig successfully
+2025-08-27 14:16:54,870 [INFO] Created AutoDetectSourceLanguageConfig with languages: ['en-US', 'ar-SA']
+2025-08-27 14:16:54,871 [INFO] Created SourceLanguageRecognizer successfully
+2025-08-27 14:16:54,872 [INFO] Starting continuous recognition...
+2025-08-27 14:16:55,980 [INFO] Session stopped
+2025-08-27 14:16:56,375 [INFO] Stopping recognition...

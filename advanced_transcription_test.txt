@@ -1,0 +1,93 @@
+2025-08-27 15:19:11,665 [INFO] === TESTING ADVANCED MULTILINGUAL TRANSCRIPTION ===
+2025-08-27 15:19:11,665 [INFO] Using language detection host: ws://localhost:5003
+2025-08-27 15:19:11,667 [INFO] Languages: ['en-US', 'ar-SA']
+2025-08-27 15:19:11,667 [INFO] Audio file: C:\Users\amantara\OneDrive - Microsoft\Documents\projects\Language_identification\audio\samples\Arabic_english_mix_optimized.wav
+2025-08-27 15:19:11,668 [INFO] Output segments: C:\Users\amantara\OneDrive - Microsoft\Documents\projects\Language_identification\advanced_segments.json
+2025-08-27 15:19:11,668 [INFO] Output transcript: C:\Users\amantara\OneDrive - Microsoft\Documents\projects\Language_identification\advanced_transcript.json
+2025-08-27 15:19:11,668 [INFO] STT host mapping: {'en-us': 'ws://localhost:5004', 'ar-sa': 'ws://localhost:5005'}
+2025-08-27 15:19:11,668 [INFO] 
+Step 1: Detecting language segments...
+2025-08-27 15:19:11,668 [INFO] Starting language identification...
+2025-08-27 15:19:11,670 [WARNING] Synchronous language detection failed, falling back to continuous method...
+2025-08-27 15:19:11,670 [DEBUG] Set language detection mode to Continuous
+2025-08-27 15:19:11,672 [INFO] Starting continuous language identification
+2025-08-27 15:19:17,961 [INFO] LID event detected: en-us start=0.00s dur=1.5s
+2025-08-27 15:19:17,961 [DEBUG] LID event detailed: lang=en-us start=0 dur=15000000
+2025-08-27 15:19:17,961 [DEBUG] Start first segment lang=en-us start=0
+2025-08-27 15:19:18,183 [INFO] Successfully detected language; stopping early
+2025-08-27 15:19:18,963 [INFO] LID event detected: en-us start=1.50s dur=1.0s
+2025-08-27 15:19:18,963 [DEBUG] LID event detailed: lang=en-us start=14990000 dur=10000000
+2025-08-27 15:19:19,859 [INFO] LID event detected: en-us start=2.50s dur=1.0s
+2025-08-27 15:19:19,859 [DEBUG] LID event detailed: lang=en-us start=24990000 dur=10000000
+2025-08-27 15:19:20,428 [INFO] LID event detected: en-us start=3.50s dur=1.0s
+2025-08-27 15:19:20,429 [DEBUG] LID event detailed: lang=en-us start=34990000 dur=10000000
+2025-08-27 15:19:21,338 [INFO] LID event detected: en-us start=4.50s dur=1.0s
+2025-08-27 15:19:21,339 [DEBUG] LID event detailed: lang=en-us start=44990000 dur=10000000
+2025-08-27 15:19:21,944 [INFO] LID event detected: ar-sa start=5.50s dur=1.0s
+2025-08-27 15:19:21,944 [DEBUG] LID event detailed: lang=ar-sa start=54990000 dur=10000000
+2025-08-27 15:19:21,945 [DEBUG] Language change en-us->ar-sa at 54990000
+2025-08-27 15:19:21,945 [DEBUG] Closed segment id=0 lang=en-us start=0 end=54990000
+2025-08-27 15:19:22,672 [INFO] LID event detected: ar-sa start=6.50s dur=1.0s
+2025-08-27 15:19:22,672 [DEBUG] LID event detailed: lang=ar-sa start=64990000 dur=10000000
+2025-08-27 15:19:23,447 [INFO] LID event detected: ar-sa start=7.50s dur=1.0s
+2025-08-27 15:19:23,451 [DEBUG] LID event detailed: lang=ar-sa start=74990000 dur=10000000
+2025-08-27 15:19:25,157 [INFO] LID event detected: en-us start=8.50s dur=1.0s
+2025-08-27 15:19:25,158 [DEBUG] LID event detailed: lang=en-us start=84990000 dur=10000000
+2025-08-27 15:19:25,158 [DEBUG] Language change ar-sa->en-us at 84990000
+2025-08-27 15:19:25,159 [DEBUG] Closed segment id=1 lang=ar-sa start=54990000 end=84990000
+2025-08-27 15:19:26,345 [INFO] LID event detected: en-us start=9.50s dur=1.0s
+2025-08-27 15:19:26,345 [DEBUG] LID event detailed: lang=en-us start=94990000 dur=10000000
+2025-08-27 15:19:28,026 [INFO] LID event detected: en-us start=10.50s dur=1.0s
+2025-08-27 15:19:28,026 [DEBUG] LID event detailed: lang=en-us start=104990000 dur=10000000
+2025-08-27 15:19:28,193 [DEBUG] Recognition stopped/canceled event received
+2025-08-27 15:19:28,193 [DEBUG] Closed segment id=2 lang=en-us start=84990000 end=114990000
+2025-08-27 15:19:28,195 [ERROR] Canceled: 
+2025-08-27 15:19:28,195 [INFO] Wrote segments to advanced_segments.json
+2025-08-27 15:19:28,242 [INFO] 
+Step 2: Loading language segments...
+2025-08-27 15:19:28,247 [INFO] Found 3 language segments
+2025-08-27 15:19:28,247 [INFO] 
+Step 3: Initializing persistent connections to speech containers...
+2025-08-27 15:19:28,248 [INFO] Initializing connection to ws://localhost:5004 for language: en-us
+2025-08-27 15:19:28,248 [ERROR] Failed to initialize connection to ws://localhost:5004: type object 'PropertyId' has no attribute 'Speech_SessionTimeout'
+2025-08-27 15:19:28,250 [INFO] Initializing connection to ws://localhost:5005 for language: ar-sa
+2025-08-27 15:19:28,255 [ERROR] Failed to initialize connection to ws://localhost:5005: type object 'PropertyId' has no attribute 'Speech_SessionTimeout'
+2025-08-27 15:19:28,262 [INFO] 
+Step 4: Transcribing each language segment...
+2025-08-27 15:19:28,264 [INFO] Processing segment: en-us from 0.00s to 5.50s
+2025-08-27 15:19:28,272 [INFO] Created temporary segment file: C:\Users\amantara\AppData\Local\Temp\segment_en-us_0_5_ff0bdcdc.wav
+2025-08-27 15:19:28,304 [DEBUG] Recognizing speech from segment file using ws://localhost:5004
+2025-08-27 15:19:29,478 [ERROR] Recognition canceled: CancellationReason.Error
+2025-08-27 15:19:29,478 [ERROR] Error details: Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR
+ws://localhost:5004/speech/recognition/interactive/cognitiveservices/v1?language=en-us
+X-ConnectionId: 6dd41c04e6b74769a1195e2a2dd6e5d3 SessionId: 6dd41c04e6b74769a1195e2a2dd6e5d3
+2025-08-27 15:19:29,979 [WARNING] Failed to remove temporary file (attempt 1/3): [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\amantara\\AppData\\Local\\Temp\\segment_en-us_0_5_ff0bdcdc.wav'
+2025-08-27 15:19:30,481 [WARNING] Failed to remove temporary file (attempt 2/3): [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\amantara\\AppData\\Local\\Temp\\segment_en-us_0_5_ff0bdcdc.wav'
+2025-08-27 15:19:30,982 [WARNING] Failed to remove temporary file (attempt 3/3): [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\amantara\\AppData\\Local\\Temp\\segment_en-us_0_5_ff0bdcdc.wav'
+2025-08-27 15:19:30,982 [WARNING] Could not remove temporary file after multiple attempts. It will be left for system cleanup.
+2025-08-27 15:19:30,985 [INFO] Processing segment: ar-sa from 5.50s to 8.50s
+2025-08-27 15:19:30,986 [INFO] Created temporary segment file: C:\Users\amantara\AppData\Local\Temp\segment_ar-sa_5_3_5e932d2a.wav
+2025-08-27 15:19:31,011 [DEBUG] Recognizing speech from segment file using ws://localhost:5005
+2025-08-27 15:19:32,180 [ERROR] Recognition canceled: CancellationReason.Error
+2025-08-27 15:19:32,181 [ERROR] Error details: Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR
+ws://localhost:5005/speech/recognition/interactive/cognitiveservices/v1?language=ar-sa
+X-ConnectionId: 00987517986245249b7459c1c8c9ea1d SessionId: 00987517986245249b7459c1c8c9ea1d
+2025-08-27 15:19:32,683 [WARNING] Failed to remove temporary file (attempt 1/3): [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\amantara\\AppData\\Local\\Temp\\segment_ar-sa_5_3_5e932d2a.wav'
+2025-08-27 15:19:33,184 [WARNING] Failed to remove temporary file (attempt 2/3): [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\amantara\\AppData\\Local\\Temp\\segment_ar-sa_5_3_5e932d2a.wav'
+2025-08-27 15:19:33,686 [WARNING] Failed to remove temporary file (attempt 3/3): [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\amantara\\AppData\\Local\\Temp\\segment_ar-sa_5_3_5e932d2a.wav'
+2025-08-27 15:19:33,686 [WARNING] Could not remove temporary file after multiple attempts. It will be left for system cleanup.
+2025-08-27 15:19:33,688 [INFO] Processing segment: en-us from 8.50s to 11.50s
+2025-08-27 15:19:33,690 [INFO] Created temporary segment file: C:\Users\amantara\AppData\Local\Temp\segment_en-us_8_3_b4dfe6ad.wav
+2025-08-27 15:19:33,724 [DEBUG] Recognizing speech from segment file using ws://localhost:5004
+2025-08-27 15:19:34,875 [ERROR] Recognition canceled: CancellationReason.Error
+2025-08-27 15:19:34,875 [ERROR] Error details: Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR
+ws://localhost:5004/speech/recognition/interactive/cognitiveservices/v1?language=en-us
+X-ConnectionId: 0d1bde5af31a46a58e5c3cdb24a39c86 SessionId: 0d1bde5af31a46a58e5c3cdb24a39c86
+2025-08-27 15:19:35,376 [WARNING] Failed to remove temporary file (attempt 1/3): [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\amantara\\AppData\\Local\\Temp\\segment_en-us_8_3_b4dfe6ad.wav'
+2025-08-27 15:19:35,878 [WARNING] Failed to remove temporary file (attempt 2/3): [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\amantara\\AppData\\Local\\Temp\\segment_en-us_8_3_b4dfe6ad.wav'
+2025-08-27 15:19:36,380 [WARNING] Failed to remove temporary file (attempt 3/3): [WinError 32] The process cannot access the file because it is being used by another process: 'C:\\Users\\amantara\\AppData\\Local\\Temp\\segment_en-us_8_3_b4dfe6ad.wav'
+2025-08-27 15:19:36,381 [WARNING] Could not remove temporary file after multiple attempts. It will be left for system cleanup.
+2025-08-27 15:19:36,381 [INFO] 
+Step 5: Creating final transcript...
+2025-08-27 15:19:36,388 [INFO] Wrote complete transcript to advanced_transcript.json
+2025-08-27 15:19:36,388 [INFO] Full transcript: 

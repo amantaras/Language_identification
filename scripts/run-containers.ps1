@@ -65,6 +65,9 @@ foreach ($k in $required) {
         Write-Host "  $k = $val" -ForegroundColor DarkGray
 }
 
+Write-Host "All env keys:" -ForegroundColor Yellow
+$envTable.Keys | ForEach-Object { Write-Host "  '$_' = '$($envTable[$_])'" -ForegroundColor Yellow }
+
 # Local vars
 $billing = ($envTable['SPEECH_BILLING_ENDPOINT'] | ForEach-Object { $_.Trim() })
 $key     = ($envTable['SPEECH_API_KEY'] | ForEach-Object { $_.Trim() })
@@ -84,8 +87,6 @@ $lidName = 'speech-lid'
 $enName  = "speech-stt-$($enLoc.ToLower())"
 $arName  = "speech-stt-$($arLoc.ToLower())"
 
-$detach = if ($Interactive) { @() } else { @('-d') }
-
 function Remove-IfExists([string]$n) {
         $exists = docker ps -a --format '{{.Names}}' | Where-Object { $_ -eq $n }
         if ($exists) { docker rm -f $n | Out-Null }
@@ -98,22 +99,39 @@ if ($ForceRecreate) {
         Remove-IfExists $arName
 }
 
-Write-Host "Starting Language Identification (host port $lidPort -> container 5000)" -ForegroundColor Green
-$lidImageRef = if ($lidImg -match ':[^/]+$') { $lidImg } else { "$lidImg:latest" }
-if (-not $lidPort) { throw "LID_PORT empty" }
-Write-Host " > docker run -d --name $lidName -p $lidPort:5000 $lidImageRef Eula=accept Billing=<endpoint> ApiKey=<key>" -ForegroundColor DarkGray
-docker run @detach --name $lidName -p "$lidPort:5000" $lidImageRef Eula=accept Billing=$billing ApiKey=$key
+Write-Host "Starting Language Identification (host $lidPort -> 5000)" -ForegroundColor Green
+Write-Host "Debug: lidImg='$lidImg'" -ForegroundColor Yellow
+$lidImageRef = $lidImg.Trim()
+Write-Host "Debug: lidImageRef='$lidImageRef'" -ForegroundColor Yellow
+if (-not ($lidImageRef -match ':[^/]+$')) { $lidImageRef = "$lidImageRef:latest" }
+Write-Host "Debug: lidImageRef after regex='$lidImageRef'" -ForegroundColor Yellow
 
-Write-Host "Starting EN STT ($enLoc host port $enPort -> 5000)" -ForegroundColor Green
-$sttImageRef = if ($sttImg -match ':[^/]+$') { $sttImg } else { "$sttImg:latest" }
-if (-not $enPort) { throw "EN_PORT empty" }
-Write-Host " > docker run -d --name $enName -p $enPort:5000 $sttImageRef Eula=accept Billing=<endpoint> ApiKey=<key> SpeechServiceConnection_Locale=$enLoc" -ForegroundColor DarkGray
-docker run @detach --name $enName -p "$enPort:5000" $sttImageRef Eula=accept Billing=$billing ApiKey=$key SpeechServiceConnection_Locale=$enLoc
+$lidCmd = "docker run -d --name $lidName -p $lidPort`:5000 --memory $lidMem --cpus $lidCpu -e Eula=accept -e Billing=$billing -e ApiKey=$key $lidImageRef"
+if ($Interactive) {
+    $lidCmd = $lidCmd.Replace(" -d ", " ")
+}
+Write-Host " > $lidCmd" -ForegroundColor DarkGray
+Invoke-Expression $lidCmd
 
-Write-Host "Starting AR STT ($arLoc host port $arPort -> 5000)" -ForegroundColor Green
-if (-not $arPort) { throw "AR_PORT empty" }
-Write-Host " > docker run -d --name $arName -p $arPort:5000 $sttImageRef Eula=accept Billing=<endpoint> ApiKey=<key> SpeechServiceConnection_Locale=$arLoc" -ForegroundColor DarkGray
-docker run @detach --name $arName -p "$arPort:5000" $sttImageRef Eula=accept Billing=$billing ApiKey=$key SpeechServiceConnection_Locale=$arLoc
+Write-Host "Starting EN STT ($enLoc host $enPort -> 5000)" -ForegroundColor Green
+$sttImageRef = $sttImg.Trim()
+if (-not ($sttImageRef -match ':[^/]+$')) { $sttImageRef = "$sttImageRef:latest" }
+
+$enCmd = "docker run -d --name $enName -p $enPort`:5000 --memory $sttMem --cpus $sttCpu -e Eula=accept -e Billing=$billing -e ApiKey=$key -e SpeechServiceConnection_Locale=$enLoc $sttImageRef"
+if ($Interactive) {
+    $enCmd = $enCmd.Replace(" -d ", " ")
+}
+Write-Host " > $enCmd" -ForegroundColor DarkGray
+Invoke-Expression $enCmd
+
+Write-Host "Starting AR STT ($arLoc host $arPort -> 5000)" -ForegroundColor Green
+
+$arCmd = "docker run -d --name $arName -p $arPort`:5000 --memory $sttMem --cpus $sttCpu -e Eula=accept -e Billing=$billing -e ApiKey=$key -e SpeechServiceConnection_Locale=$arLoc $sttImageRef"
+if ($Interactive) {
+    $arCmd = $arCmd.Replace(" -d ", " ")
+}
+Write-Host " > $arCmd" -ForegroundColor DarkGray
+Invoke-Expression $arCmd
 
 Write-Host "All containers started." -ForegroundColor Cyan
 if (-not $Interactive) { Write-Host "Use docker logs -f <name> to view logs." -ForegroundColor DarkCyan }

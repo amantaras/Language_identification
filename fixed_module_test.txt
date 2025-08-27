@@ -1,0 +1,15 @@
+[INFO] Starting test of fixed language detection module
+[INFO] Testing detect_languages with audio file: audio/samples/Scenario1_20250323_S1056_New Postpaid Activation1.mp3
+[INFO] Converting audio/samples/Scenario1_20250323_S1056_New Postpaid Activation1.mp3 to audio/samples/Scenario1_20250323_S1056_New Postpaid Activation1.wav
+[DEBUG] subprocess.call(['ffmpeg', '-y', '-f', 'mp3', '-i', 'audio/samples/Scenario1_20250323_S1056_New Postpaid Activation1.mp3', '-acodec', 'pcm_s16le', '-vn', '-f', 'wav', '-'])
+[INFO] Converting stereo to mono
+[INFO] Converting sample rate from 44100Hz to 16000Hz
+[INFO] Successfully converted to audio/samples/Scenario1_20250323_S1056_New Postpaid Activation1.wav
+[INFO] Using converted audio file: audio/samples/Scenario1_20250323_S1056_New Postpaid Activation1.wav
+[DEBUG] Connecting to LID container at: localhost:5003
+[DEBUG] Added ws:// prefix. Using host URL: ws://localhost:5003
+[INFO] Starting continuous language identification
+[DEBUG] Recognition stopped/canceled event received
+[INFO] Wrote segments to fixed_module_segments.json
+[INFO] Segments written to: fixed_module_segments.json
+[INFO] Segments file exists: 105 bytes

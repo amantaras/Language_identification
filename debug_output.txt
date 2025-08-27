@@ -1,0 +1,79 @@
+[INFO] 2025-08-27 13:45:29,695 Azure Speech SDK version: 1.45.0
+[INFO] 2025-08-27 13:45:29,696 Using host URL: ws://localhost:5003
+[INFO] 2025-08-27 13:45:29,696 Added subscription key
+[INFO] 2025-08-27 13:45:29,697 SpeechConfig initialized successfully
+[INFO] 2025-08-27 13:45:29,697 AudioConfig created successfully
+[INFO] 2025-08-27 13:45:29,697 AutoDetectSourceLanguageConfig created with languages: ['en-US', 'ar-SA']
+[INFO] 2025-08-27 13:45:29,697 Trying to create a regular SpeechRecognizer first...
+[ERROR] 2025-08-27 13:45:29,865 Failed to create SpeechRecognizer: Exception with error code: 
+[CALL STACK BEGIN]
+
+    > pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - recognizer_create_speech_recognizer_from_config
+    - recognizer_create_speech_recognizer_from_config
+
+[CALL STACK END]
+
+Exception with an error code: 0xa (SPXERR_INVALID_HEADER)
+[INFO] 2025-08-27 13:45:29,865 Creating SourceLanguageRecognizer...
+[ERROR] 2025-08-27 13:45:29,976 Failed to create SourceLanguageRecognizer: Exception with error code: 
+[CALL STACK BEGIN]
+
+    > pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - recognizer_create_speech_recognizer_from_config
+    - recognizer_create_source_language_recognizer_from_auto_detect_source_lang_config
+
+[CALL STACK END]
+
+Exception with an error code: 0xa (SPXERR_INVALID_HEADER)
+[ERROR] 2025-08-27 13:45:29,976 Error type: RuntimeError
+[ERROR] 2025-08-27 13:45:29,977 Error details: Exception with error code: 
+[CALL STACK BEGIN]
+
+    > pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - pal_string_to_wstring
+    - recognizer_create_speech_recognizer_from_config
+    - recognizer_create_source_language_recognizer_from_auto_detect_source_lang_config
+
+[CALL STACK END]
+
+Exception with an error code: 0xa (SPXERR_INVALID_HEADER)
+[ERROR] 2025-08-27 13:45:29,978 \u2717 Language detection failed - no events received
