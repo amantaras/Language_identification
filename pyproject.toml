@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lang-switch-stt"
+version = "0.1.0"
+description = "Language identification and code-switch aware transcription using Azure Speech containers"
+authors = [ { name = "Your Name" } ]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+  "azure-cognitiveservices-speech>=1.37.0",
+  "pydub>=0.25.1",
+  "soundfile>=0.12.1",
+  "numpy>=1.24.0",
+  "click>=8.1.7"
+]
+
+[project.scripts]
+lang-switch-stt = "app.cli:main"

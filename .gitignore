@@ -1,0 +1,97 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Byte-compiled / optimized / DLL files
+*.so
+*.dylib
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.python-env/
+.python-version
+
+# Unit test / coverage reports
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Type checker / tooling caches
+.pyre/
+.pytype/
+.dmypy.json
+
+# Logs / temp
+*.log
+logs/
+/tmp/
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter / IPython
+.ipynb_checkpoints/
+.profile_default/
+__snapshot__/
+
+# Environment & secrets
+.env
+.env.*
+!/.env.example
+
+# Audio / large sample artifacts (adjust if you want them tracked)
+*.wav
+*.mp3
+*.flac
+
+# Container / Docker
+*.pid
+
+# Azure / tooling
+.azuredatastudio/
+
+# Local data exports
+*.jsonl
+
+# Cache
+.cache/
+
+# Lock files (add if you introduce a lock manager later)
+# poetry.lock
+# requirements-lock.txt
+
+# Generated transcripts/output
+transcript*.json
