@@ -44,10 +44,14 @@ Stop containers:
 
 ### 4. Run Detection + Transcription
 ```pwsh
-lang-switch-stt full --audio enar.wav --languages en-US --languages ar-SA `
+lang-switch-stt full --audio enar.wav `
+  --languages en-US --languages ar-SA `
   --lid-host ws://localhost:5003 `
   --map en-US=ws://localhost:5004 --map ar-SA=ws://localhost:5005 `
   --key $env:SPEECH_API_KEY --billing $env:SPEECH_BILLING_ENDPOINT `
+  --min-segment-sec 0.4 `
+  --timeout-sec 120 `
+  --verbose `
   --out transcript.json
 ```
 
@@ -73,6 +77,12 @@ lang-switch-stt full --audio enar.wav --languages en-US --languages ar-SA `
 ## Scripts
 - `scripts/run-containers.ps1`: Launch all required containers using `.env` values.
 - `scripts/stop-containers.ps1`: Stop/remove the containers.
+
+## Advanced Options
+CLI flags added for robustness:
+- `--timeout-sec`: Abort detection if it exceeds this wall-clock time.
+- `--min-segment-sec`: Drop very short language blips below this duration.
+- `--verbose`: Enable debug logging (prints segment start/end and language switches).
 
 ## Next Enhancements
 - Confidence / threshold based switching.
