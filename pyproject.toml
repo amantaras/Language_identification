@@ -19,3 +19,6 @@ dependencies = [
 
 [project.scripts]
 lang-switch-stt = "app.cli:main"
+
+[tool.setuptools]
+packages = ["app"]

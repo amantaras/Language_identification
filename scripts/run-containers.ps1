@@ -12,6 +12,8 @@ param(
         [switch]$ForceRecreate
 )
 
+$ErrorActionPreference = 'Stop'
+
 Write-Host "Loading env file: $EnvFile" -ForegroundColor Cyan
 if (-not (Test-Path $EnvFile)) { throw "Env file not found: $EnvFile" }
 
@@ -97,19 +99,26 @@ if ($ForceRecreate) {
 }
 
 Write-Host "Starting Language Identification ($lidPort)" -ForegroundColor Green
-docker run @detach --name $lidName -p "$lidPort:5003" --memory $lidMem --cpus $lidCpu `
-    $lidImg `
-    Eula=accept Billing=$billing ApiKey=$key
+$lidImageRef = if ($lidImg -match ':[^/]+$') { $lidImg } else { "$lidImg:latest" }
+if (-not $lidImageRef) { throw "LID image reference resolved empty (source '$lidImg')" }
+Write-Host " Image: $lidImageRef" -ForegroundColor DarkGray
+docker run @detach --name $lidName -p "${lidPort}:5000" --memory $lidMem --cpus $lidCpu `
+        $lidImageRef `
+        Eula=accept Billing=$billing ApiKey=$key
 
 Write-Host "Starting EN STT ($enLoc on $enPort)" -ForegroundColor Green
-docker run @detach --name $enName -p "$enPort:5004" --memory $sttMem --cpus $sttCpu `
-    $sttImg `
-    Eula=accept Billing=$billing ApiKey=$key "SpeechServiceConnection_Locale=$enLoc"
+$sttImageRef = if ($sttImg -match ':[^/]+$') { $sttImg } else { "$sttImg:latest" }
+if (-not $sttImageRef) { throw "STT image reference resolved empty (source '$sttImg')" }
+Write-Host " Image: $sttImageRef" -ForegroundColor DarkGray
+docker run @detach --name $enName -p "${enPort}:5000" --memory $sttMem --cpus $sttCpu `
+        $sttImageRef `
+        Eula=accept Billing=$billing ApiKey=$key SpeechServiceConnection_Locale=$enLoc
 
 Write-Host "Starting AR STT ($arLoc on $arPort)" -ForegroundColor Green
-docker run @detach --name $arName -p "$arPort:5005" --memory $sttMem --cpus $sttCpu `
-    $sttImg `
-    Eula=accept Billing=$billing ApiKey=$key "SpeechServiceConnection_Locale=$arLoc"
+Write-Host " Image: $sttImageRef" -ForegroundColor DarkGray
+docker run @detach --name $arName -p "${arPort}:5000" --memory $sttMem --cpus $sttCpu `
+        $sttImageRef `
+        Eula=accept Billing=$billing ApiKey=$key SpeechServiceConnection_Locale=$arLoc
 
 Write-Host "All containers started." -ForegroundColor Cyan
 if (-not $Interactive) { Write-Host "Use docker logs -f <name> to view logs." -ForegroundColor DarkCyan }
