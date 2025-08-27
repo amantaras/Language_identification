@@ -66,11 +66,11 @@ foreach ($k in $required) {
 }
 
 # Local vars
-$billing = $envTable['SPEECH_BILLING_ENDPOINT']
-$key     = $envTable['SPEECH_API_KEY']
-$lidPort = $envTable['LID_PORT']
-$enPort  = $envTable['EN_PORT']
-$arPort  = $envTable['AR_PORT']
+$billing = ($envTable['SPEECH_BILLING_ENDPOINT'] | ForEach-Object { $_.Trim() })
+$key     = ($envTable['SPEECH_API_KEY'] | ForEach-Object { $_.Trim() })
+$lidPort = ($envTable['LID_PORT'] | ForEach-Object { $_.Trim() })
+$enPort  = ($envTable['EN_PORT'] | ForEach-Object { $_.Trim() })
+$arPort  = ($envTable['AR_PORT'] | ForEach-Object { $_.Trim() })
 $lidImg  = $envTable['LID_IMAGE']
 $sttImg  = $envTable['STT_IMAGE']
 $enLoc   = $envTable['EN_LOCALE']
@@ -98,27 +98,22 @@ if ($ForceRecreate) {
         Remove-IfExists $arName
 }
 
-Write-Host "Starting Language Identification ($lidPort)" -ForegroundColor Green
+Write-Host "Starting Language Identification (host port $lidPort -> container 5000)" -ForegroundColor Green
 $lidImageRef = if ($lidImg -match ':[^/]+$') { $lidImg } else { "$lidImg:latest" }
-if (-not $lidImageRef) { throw "LID image reference resolved empty (source '$lidImg')" }
-Write-Host " Image: $lidImageRef" -ForegroundColor DarkGray
-docker run @detach --name $lidName -p "${lidPort}:5000" --memory $lidMem --cpus $lidCpu `
-        $lidImageRef `
-        Eula=accept Billing=$billing ApiKey=$key
+if (-not $lidPort) { throw "LID_PORT empty" }
+Write-Host " > docker run -d --name $lidName -p $lidPort:5000 $lidImageRef Eula=accept Billing=<endpoint> ApiKey=<key>" -ForegroundColor DarkGray
+docker run @detach --name $lidName -p "$lidPort:5000" $lidImageRef Eula=accept Billing=$billing ApiKey=$key
 
-Write-Host "Starting EN STT ($enLoc on $enPort)" -ForegroundColor Green
+Write-Host "Starting EN STT ($enLoc host port $enPort -> 5000)" -ForegroundColor Green
 $sttImageRef = if ($sttImg -match ':[^/]+$') { $sttImg } else { "$sttImg:latest" }
-if (-not $sttImageRef) { throw "STT image reference resolved empty (source '$sttImg')" }
-Write-Host " Image: $sttImageRef" -ForegroundColor DarkGray
-docker run @detach --name $enName -p "${enPort}:5000" --memory $sttMem --cpus $sttCpu `
-        $sttImageRef `
-        Eula=accept Billing=$billing ApiKey=$key SpeechServiceConnection_Locale=$enLoc
+if (-not $enPort) { throw "EN_PORT empty" }
+Write-Host " > docker run -d --name $enName -p $enPort:5000 $sttImageRef Eula=accept Billing=<endpoint> ApiKey=<key> SpeechServiceConnection_Locale=$enLoc" -ForegroundColor DarkGray
+docker run @detach --name $enName -p "$enPort:5000" $sttImageRef Eula=accept Billing=$billing ApiKey=$key SpeechServiceConnection_Locale=$enLoc
 
-Write-Host "Starting AR STT ($arLoc on $arPort)" -ForegroundColor Green
-Write-Host " Image: $sttImageRef" -ForegroundColor DarkGray
-docker run @detach --name $arName -p "${arPort}:5000" --memory $sttMem --cpus $sttCpu `
-        $sttImageRef `
-        Eula=accept Billing=$billing ApiKey=$key SpeechServiceConnection_Locale=$arLoc
+Write-Host "Starting AR STT ($arLoc host port $arPort -> 5000)" -ForegroundColor Green
+if (-not $arPort) { throw "AR_PORT empty" }
+Write-Host " > docker run -d --name $arName -p $arPort:5000 $sttImageRef Eula=accept Billing=<endpoint> ApiKey=<key> SpeechServiceConnection_Locale=$arLoc" -ForegroundColor DarkGray
+docker run @detach --name $arName -p "$arPort:5000" $sttImageRef Eula=accept Billing=$billing ApiKey=$key SpeechServiceConnection_Locale=$arLoc
 
 Write-Host "All containers started." -ForegroundColor Cyan
 if (-not $Interactive) { Write-Host "Use docker logs -f <name> to view logs." -ForegroundColor DarkCyan }
