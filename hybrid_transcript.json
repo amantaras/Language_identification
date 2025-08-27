@@ -1,0 +1,104 @@
+{
+  "audio_file": "audio\\samples\\Arabic_english_mix_optimized.wav",
+  "segment_count": 12,
+  "transcribed_segments": [
+    {
+      "language": "en-US",
+      "start_time": 0,
+      "duration": 54990000,
+      "start_sec": 0.0,
+      "duration_sec": 5.499,
+      "transcript": "",
+      "note": "No speech recognized"
+    },
+    {
+      "language": "ar-SA",
+      "start_time": 54990000,
+      "duration": 30000000,
+      "start_sec": 5.499,
+      "duration_sec": 3.000000000000001,
+      "transcript": "لديه مشكلة في تسجيل الدخول لحسابي."
+    },
+    {
+      "language": "en-US",
+      "start_time": 84990000,
+      "duration": 30000000,
+      "start_sec": 8.499,
+      "duration_sec": 3.0,
+      "transcript": "Can you tell me what the error message you're seeing?"
+    },
+    {
+      "language": "ar-SA",
+      "start_time": 114990000,
+      "duration": 40000000,
+      "start_sec": 11.499,
+      "duration_sec": 4.0,
+      "transcript": "تظهر لي رسالة تقول إن كلمة المرور غير صحيحة."
+    },
+    {
+      "language": "en-US",
+      "start_time": 154990000,
+      "duration": 30010000,
+      "start_sec": 15.499,
+      "duration_sec": 3.0009999999999994,
+      "transcript": "Let me check your account. What's your e-mail address?"
+    },
+    {
+      "language": "ar-SA",
+      "start_time": 185000000,
+      "duration": 30000000,
+      "start_sec": 18.5,
+      "duration_sec": 3.0,
+      "transcript": "آه، بريدي الإلكتروني هو أحمد وان تو ثري."
+    },
+    {
+      "language": "en-US",
+      "start_time": 215000000,
+      "duration": 60000000,
+      "start_sec": 21.5,
+      "duration_sec": 6.0,
+      "transcript": "At example.com."
+    },
+    {
+      "language": "ar-SA",
+      "start_time": 275000000,
+      "duration": 10000000,
+      "start_sec": 27.5,
+      "duration_sec": 1.0,
+      "transcript": "حسنا."
+    },
+    {
+      "language": "en-US",
+      "start_time": 285000000,
+      "duration": 50000000,
+      "start_sec": 28.5,
+      "duration_sec": 5.0,
+      "transcript": "Look, I've reset your password. You'll get an e-mail shortly with the instructions moment."
+    },
+    {
+      "language": "ar-SA",
+      "start_time": 335000000,
+      "duration": 30000000,
+      "start_sec": 33.5,
+      "duration_sec": 3.0,
+      "transcript": "ممتاز، شكرا جزيلا."
+    },
+    {
+      "language": "en-US",
+      "start_time": 365000000,
+      "duration": 20000000,
+      "start_sec": 36.5,
+      "duration_sec": 2.0,
+      "transcript": "Let us know if you need anything else I can."
+    },
+    {
+      "language": "ar-SA",
+      "start_time": 385000000,
+      "duration": 33500000,
+      "start_sec": 38.5,
+      "duration_sec": 3.3500000000000014,
+      "transcript": "أكيد، شكرا مرة ثانيه."
+    }
+  ],
+  "full_transcript": "[ar-SA] لديه مشكلة في تسجيل الدخول لحسابي. [en-US] Can you tell me what the error message you're seeing? [ar-SA] تظهر لي رسالة تقول إن كلمة المرور غير صحيحة. [en-US] Let me check your account. What's your e-mail address? [ar-SA] آه، بريدي الإلكتروني هو أحمد وان تو ثري. [en-US] At example.com. [ar-SA] حسنا. [en-US] Look, I've reset your password. You'll get an e-mail shortly with the instructions moment. [ar-SA] ممتاز، شكرا جزيلا. [en-US] Let us know if you need anything else I can. [ar-SA] أكيد، شكرا مرة ثانيه."
+}

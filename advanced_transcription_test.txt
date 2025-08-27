@@ -1,91 +1,91 @@
-2025-08-27 16:56:43,665 [INFO] === TESTING ADVANCED MULTILINGUAL TRANSCRIPTION ===
-2025-08-27 16:56:43,665 [INFO] Using language detection host: ws://localhost:5003
-2025-08-27 16:56:43,669 [INFO] Languages: ['en-US', 'ar-SA']
-2025-08-27 16:56:43,669 [INFO] Audio file: C:\Users\amantara\OneDrive - Microsoft\Documents\projects\Language_identification\audio\samples\Arabic_english_mix_optimized.wav
-2025-08-27 16:56:43,670 [INFO] Output segments: C:\Users\amantara\OneDrive - Microsoft\Documents\projects\Language_identification\advanced_segments.json
-2025-08-27 16:56:43,670 [INFO] Output transcript: C:\Users\amantara\OneDrive - Microsoft\Documents\projects\Language_identification\advanced_transcript.json
-2025-08-27 16:56:43,670 [INFO] STT host mapping: {'en-US': 'ws://localhost:5004', 'ar-SA': 'ws://localhost:5005'}
-2025-08-27 16:56:43,670 [INFO] 
+2025-08-27 17:11:58,608 [INFO] === TESTING ADVANCED MULTILINGUAL TRANSCRIPTION ===
+2025-08-27 17:11:58,608 [INFO] Using language detection host: ws://localhost:5003
+2025-08-27 17:11:58,608 [INFO] Languages: ['en-US', 'ar-SA']
+2025-08-27 17:11:58,608 [INFO] Audio file: C:\Users\amantara\OneDrive - Microsoft\Documents\projects\Language_identification\audio\samples\Arabic_english_mix_optimized.wav
+2025-08-27 17:11:58,608 [INFO] Output segments: C:\Users\amantara\OneDrive - Microsoft\Documents\projects\Language_identification\advanced_segments.json
+2025-08-27 17:11:58,608 [INFO] Output transcript: C:\Users\amantara\OneDrive - Microsoft\Documents\projects\Language_identification\advanced_transcript.json
+2025-08-27 17:11:58,612 [INFO] STT host mapping: {'en-US': 'ws://localhost:5004', 'ar-SA': 'ws://localhost:5005'}
+2025-08-27 17:11:58,612 [INFO] 
 Step 1: Detecting language segments...
-2025-08-27 16:56:43,670 [INFO] Starting language identification...
-2025-08-27 16:56:43,672 [WARNING] Synchronous language detection failed, falling back to continuous method...
-2025-08-27 16:56:43,672 [DEBUG] Set language detection mode to Continuous
-2025-08-27 16:56:43,674 [INFO] Starting continuous language identification
-2025-08-27 16:56:44,723 [INFO] LID event detected: en-us start=0.00s dur=1.5s
-2025-08-27 16:56:44,723 [DEBUG] LID event detailed: lang=en-us start=0 dur=15000000
-2025-08-27 16:56:44,724 [DEBUG] Start first segment lang=en-us start=0
-2025-08-27 16:56:45,021 [INFO] LID event detected: en-us start=1.50s dur=1.0s
-2025-08-27 16:56:45,022 [DEBUG] LID event detailed: lang=en-us start=14990000 dur=10000000
-2025-08-27 16:56:45,233 [INFO] LID event detected: en-us start=2.50s dur=1.0s
-2025-08-27 16:56:45,234 [DEBUG] LID event detailed: lang=en-us start=24990000 dur=10000000
-2025-08-27 16:56:45,539 [INFO] LID event detected: en-us start=3.50s dur=1.0s
-2025-08-27 16:56:45,540 [DEBUG] LID event detailed: lang=en-us start=34990000 dur=10000000
-2025-08-27 16:56:45,925 [INFO] LID event detected: en-us start=4.50s dur=1.0s
-2025-08-27 16:56:45,926 [DEBUG] LID event detailed: lang=en-us start=44990000 dur=10000000
-2025-08-27 16:56:46,234 [INFO] LID event detected: ar-sa start=5.50s dur=1.0s
-2025-08-27 16:56:46,235 [DEBUG] LID event detailed: lang=ar-sa start=54990000 dur=10000000
-2025-08-27 16:56:46,235 [DEBUG] Language change en-us->ar-sa at 54990000
-2025-08-27 16:56:46,235 [DEBUG] Closed segment id=0 lang=en-us start=0 end=54990000
-2025-08-27 16:56:46,731 [INFO] LID event detected: ar-sa start=6.50s dur=1.0s
-2025-08-27 16:56:46,731 [DEBUG] LID event detailed: lang=ar-sa start=64990000 dur=10000000
-2025-08-27 16:56:47,119 [INFO] LID event detected: ar-sa start=7.50s dur=1.0s
-2025-08-27 16:56:47,119 [DEBUG] LID event detailed: lang=ar-sa start=74990000 dur=10000000
-2025-08-27 16:56:47,536 [INFO] LID event detected: en-us start=8.50s dur=1.0s
-2025-08-27 16:56:47,537 [DEBUG] LID event detailed: lang=en-us start=84990000 dur=10000000
-2025-08-27 16:56:47,537 [DEBUG] Language change ar-sa->en-us at 84990000
-2025-08-27 16:56:47,537 [DEBUG] Closed segment id=1 lang=ar-sa start=54990000 end=84990000
-2025-08-27 16:56:47,822 [INFO] LID event detected: en-us start=9.50s dur=1.0s
-2025-08-27 16:56:47,822 [DEBUG] LID event detailed: lang=en-us start=94990000 dur=10000000
-2025-08-27 16:56:48,105 [INFO] LID event detected: en-us start=10.50s dur=1.0s
-2025-08-27 16:56:48,106 [DEBUG] LID event detailed: lang=en-us start=104990000 dur=10000000
-2025-08-27 16:56:48,331 [INFO] LID event detected: ar-sa start=11.50s dur=1.0s
-2025-08-27 16:56:48,331 [DEBUG] LID event detailed: lang=ar-sa start=114990000 dur=10000000
-2025-08-27 16:56:48,333 [DEBUG] Language change en-us->ar-sa at 114990000
-2025-08-27 16:56:48,333 [DEBUG] Closed segment id=2 lang=en-us start=84990000 end=114990000
-2025-08-27 16:56:48,636 [INFO] LID event detected: ar-sa start=12.50s dur=1.0s
-2025-08-27 16:56:48,636 [DEBUG] LID event detailed: lang=ar-sa start=124990000 dur=10000000
-2025-08-27 16:56:48,684 [INFO] Successfully detected language; stopping early
-2025-08-27 16:56:49,054 [INFO] LID event detected: ar-sa start=13.50s dur=1.601s
-2025-08-27 16:56:49,055 [DEBUG] LID event detailed: lang=ar-sa start=134990000 dur=16010000
-2025-08-27 16:56:49,056 [DEBUG] Recognition stopped/canceled event received
-2025-08-27 16:56:49,056 [DEBUG] Closed segment id=3 lang=ar-sa start=114990000 end=151000000
-2025-08-27 16:56:49,057 [INFO] Wrote segments to advanced_segments.json
-2025-08-27 16:56:49,120 [INFO] 
+2025-08-27 17:11:58,612 [INFO] Starting language identification...
+2025-08-27 17:11:58,612 [WARNING] Synchronous language detection failed, falling back to continuous method...
+2025-08-27 17:11:58,612 [DEBUG] Set language detection mode to Continuous
+2025-08-27 17:11:58,612 [INFO] Starting continuous language identification
+2025-08-27 17:11:59,449 [INFO] LID event detected: en-us start=0.00s dur=1.5s
+2025-08-27 17:11:59,449 [DEBUG] LID event detailed: lang=en-us start=0 dur=15000000
+2025-08-27 17:11:59,449 [DEBUG] Start first segment lang=en-us start=0
+2025-08-27 17:11:59,750 [INFO] LID event detected: en-us start=1.50s dur=1.0s
+2025-08-27 17:11:59,750 [DEBUG] LID event detailed: lang=en-us start=14990000 dur=10000000
+2025-08-27 17:12:00,064 [INFO] LID event detected: en-us start=2.50s dur=1.0s
+2025-08-27 17:12:00,064 [DEBUG] LID event detailed: lang=en-us start=24990000 dur=10000000
+2025-08-27 17:12:00,346 [INFO] LID event detected: en-us start=3.50s dur=1.0s
+2025-08-27 17:12:00,346 [DEBUG] LID event detailed: lang=en-us start=34990000 dur=10000000
+2025-08-27 17:12:00,757 [INFO] LID event detected: en-us start=4.50s dur=1.0s
+2025-08-27 17:12:00,757 [DEBUG] LID event detailed: lang=en-us start=44990000 dur=10000000
+2025-08-27 17:12:01,160 [INFO] LID event detected: ar-sa start=5.50s dur=1.0s
+2025-08-27 17:12:01,160 [DEBUG] LID event detailed: lang=ar-sa start=54990000 dur=10000000
+2025-08-27 17:12:01,160 [DEBUG] Language change en-us->ar-sa at 54990000
+2025-08-27 17:12:01,160 [DEBUG] Closed segment id=0 lang=en-us start=0 end=54990000
+2025-08-27 17:12:01,461 [INFO] LID event detected: ar-sa start=6.50s dur=1.0s
+2025-08-27 17:12:01,461 [DEBUG] LID event detailed: lang=ar-sa start=64990000 dur=10000000
+2025-08-27 17:12:01,687 [INFO] LID event detected: ar-sa start=7.50s dur=1.0s
+2025-08-27 17:12:01,687 [DEBUG] LID event detailed: lang=ar-sa start=74990000 dur=10000000
+2025-08-27 17:12:01,980 [INFO] LID event detected: en-us start=8.50s dur=1.0s
+2025-08-27 17:12:01,982 [DEBUG] LID event detailed: lang=en-us start=84990000 dur=10000000
+2025-08-27 17:12:01,982 [DEBUG] Language change ar-sa->en-us at 84990000
+2025-08-27 17:12:01,982 [DEBUG] Closed segment id=1 lang=ar-sa start=54990000 end=84990000
+2025-08-27 17:12:02,268 [INFO] LID event detected: en-us start=9.50s dur=1.0s
+2025-08-27 17:12:02,269 [DEBUG] LID event detailed: lang=en-us start=94990000 dur=10000000
+2025-08-27 17:12:02,546 [INFO] LID event detected: en-us start=10.50s dur=1.0s
+2025-08-27 17:12:02,546 [DEBUG] LID event detailed: lang=en-us start=104990000 dur=10000000
+2025-08-27 17:12:02,836 [INFO] LID event detected: ar-sa start=11.50s dur=1.0s
+2025-08-27 17:12:02,837 [DEBUG] LID event detailed: lang=ar-sa start=114990000 dur=10000000
+2025-08-27 17:12:02,837 [DEBUG] Language change en-us->ar-sa at 114990000
+2025-08-27 17:12:02,837 [DEBUG] Closed segment id=2 lang=en-us start=84990000 end=114990000
+2025-08-27 17:12:03,378 [INFO] LID event detected: ar-sa start=12.50s dur=1.0s
+2025-08-27 17:12:03,378 [DEBUG] LID event detailed: lang=ar-sa start=124990000 dur=10000000
+2025-08-27 17:12:03,621 [INFO] Successfully detected language; stopping early
+2025-08-27 17:12:03,936 [INFO] LID event detected: ar-sa start=13.50s dur=1.601s
+2025-08-27 17:12:03,936 [DEBUG] LID event detailed: lang=ar-sa start=134990000 dur=16010000
+2025-08-27 17:12:03,937 [DEBUG] Recognition stopped/canceled event received
+2025-08-27 17:12:03,937 [DEBUG] Closed segment id=3 lang=ar-sa start=114990000 end=151000000
+2025-08-27 17:12:03,938 [INFO] Wrote segments to advanced_segments.json
+2025-08-27 17:12:03,973 [INFO] 
 Step 2: Loading language segments...
-2025-08-27 16:56:49,123 [INFO] Found 4 language segments
-2025-08-27 16:56:49,123 [INFO] 
+2025-08-27 17:12:03,975 [INFO] Found 4 language segments
+2025-08-27 17:12:03,975 [INFO] 
 Step 3: Initializing persistent connections to speech containers...
-2025-08-27 16:56:49,123 [INFO] Initializing connection to ws://localhost:5004 for language: en-US
-2025-08-27 16:56:49,123 [INFO] Successfully initialized connection to ws://localhost:5004
-2025-08-27 16:56:49,123 [INFO] Initializing connection to ws://localhost:5005 for language: ar-SA
-2025-08-27 16:56:49,123 [INFO] Successfully initialized connection to ws://localhost:5005
-2025-08-27 16:56:49,125 [INFO] 
+2025-08-27 17:12:03,975 [INFO] Initializing connection to ws://localhost:5004 for language: en-US
+2025-08-27 17:12:03,975 [INFO] Successfully initialized connection to ws://localhost:5004
+2025-08-27 17:12:03,975 [INFO] Initializing connection to ws://localhost:5005 for language: ar-SA
+2025-08-27 17:12:03,975 [INFO] Successfully initialized connection to ws://localhost:5005
+2025-08-27 17:12:03,975 [INFO] 
 Step 4: Transcribing each language segment...
-2025-08-27 16:56:49,125 [INFO] Processing segment: en-US → en-US from 0.00s to 5.50s
-2025-08-27 16:56:49,125 [INFO] Processing segment: ar-SA → ar-SA from 5.50s to 8.50s
-2025-08-27 16:56:49,125 [INFO] Processing segment: en-US → en-US from 8.50s to 11.50s
-2025-08-27 16:56:49,125 [INFO] Processing segment: ar-SA → ar-SA from 11.50s to 15.10s
-2025-08-27 16:56:49,130 [INFO] Created temporary segment file: C:\Users\amantara\AppData\Local\Temp\segment_ar-SA_5_3_dba72862.wav
-2025-08-27 16:56:49,130 [INFO] Created temporary segment file: C:\Users\amantara\AppData\Local\Temp\segment_en-US_8_3_dfd80840.wav
-2025-08-27 16:56:49,130 [INFO] Created temporary segment file: C:\Users\amantara\AppData\Local\Temp\segment_en-US_0_5_816d3a57.wav
-2025-08-27 16:56:49,130 [INFO] Created temporary segment file: C:\Users\amantara\AppData\Local\Temp\segment_ar-SA_11_3_2c3c8599.wav
-2025-08-27 16:56:49,721 [DEBUG] Continuous recognition returned nomatch; trying recognize_once fallback...
-2025-08-27 16:56:50,849 [ERROR] Recognition error: Canceled (unknown): Unknown details
-2025-08-27 16:56:51,350 [DEBUG] Removed temporary file: C:\Users\amantara\AppData\Local\Temp\segment_en-US_0_5_816d3a57.wav
-2025-08-27 16:57:01,304 [DEBUG] Continuous recognition returned error; trying recognize_once fallback...
-2025-08-27 16:57:01,304 [DEBUG] Continuous recognition returned error; trying recognize_once fallback...
-2025-08-27 16:57:01,321 [DEBUG] Continuous recognition returned error; trying recognize_once fallback...
-2025-08-27 16:57:02,420 [ERROR] Recognition error: Canceled (unknown): Unknown details
-2025-08-27 16:57:02,421 [ERROR] Recognition error: Canceled (unknown): Unknown details
-2025-08-27 16:57:02,433 [ERROR] Recognition error: Canceled (unknown): Unknown details
-2025-08-27 16:57:02,922 [DEBUG] Removed temporary file: C:\Users\amantara\AppData\Local\Temp\segment_ar-SA_11_3_2c3c8599.wav
-2025-08-27 16:57:02,922 [DEBUG] Removed temporary file: C:\Users\amantara\AppData\Local\Temp\segment_en-US_8_3_dfd80840.wav
-2025-08-27 16:57:02,934 [DEBUG] Removed temporary file: C:\Users\amantara\AppData\Local\Temp\segment_ar-SA_5_3_dba72862.wav
-2025-08-27 16:57:02,935 [INFO] 
+2025-08-27 17:12:03,977 [INFO] Processing segment: en-US → en-US from 0.00s to 5.50s
+2025-08-27 17:12:03,977 [INFO] Processing segment: ar-SA → ar-SA from 5.50s to 8.50s
+2025-08-27 17:12:03,977 [INFO] Processing segment: en-US → en-US from 8.50s to 11.50s
+2025-08-27 17:12:03,977 [INFO] Processing segment: ar-SA → ar-SA from 11.50s to 15.10s
+2025-08-27 17:12:03,977 [INFO] Created temporary segment file: C:\Users\amantara\AppData\Local\Temp\segment_en-US_0_5_2edcf174.wav
+2025-08-27 17:12:03,984 [INFO] Created temporary segment file: C:\Users\amantara\AppData\Local\Temp\segment_ar-SA_11_3_951dc579.wav
+2025-08-27 17:12:03,984 [INFO] Created temporary segment file: C:\Users\amantara\AppData\Local\Temp\segment_ar-SA_5_3_a8d7ba8d.wav
+2025-08-27 17:12:03,984 [INFO] Created temporary segment file: C:\Users\amantara\AppData\Local\Temp\segment_en-US_8_3_6828ac1a.wav
+2025-08-27 17:12:16,139 [DEBUG] Continuous returned error; trying recognize_once fallback...
+2025-08-27 17:12:16,139 [DEBUG] Continuous returned error; trying recognize_once fallback...
+2025-08-27 17:12:16,139 [DEBUG] Continuous returned error; trying recognize_once fallback...
+2025-08-27 17:12:16,139 [DEBUG] Continuous returned error; trying recognize_once fallback...
+2025-08-27 17:12:17,266 [ERROR] Recognition error: Canceled (unknown): Unknown details
+2025-08-27 17:12:17,267 [ERROR] Recognition error: Canceled (unknown): Unknown details
+2025-08-27 17:12:17,268 [ERROR] Recognition error: Canceled (unknown): Unknown details
+2025-08-27 17:12:17,268 [ERROR] Recognition error: Canceled (unknown): Unknown details
+2025-08-27 17:12:17,769 [DEBUG] Removed temporary file: C:\Users\amantara\AppData\Local\Temp\segment_en-US_0_5_2edcf174.wav
+2025-08-27 17:12:17,769 [DEBUG] Removed temporary file: C:\Users\amantara\AppData\Local\Temp\segment_ar-SA_5_3_a8d7ba8d.wav
+2025-08-27 17:12:17,769 [DEBUG] Removed temporary file: C:\Users\amantara\AppData\Local\Temp\segment_ar-SA_11_3_951dc579.wav
+2025-08-27 17:12:17,770 [DEBUG] Removed temporary file: C:\Users\amantara\AppData\Local\Temp\segment_en-US_8_3_6828ac1a.wav
+2025-08-27 17:12:17,772 [INFO] 
 Step 5: Creating final transcript...
-2025-08-27 16:57:02,938 [INFO] Wrote complete transcript to advanced_transcript.json
-2025-08-27 16:57:02,939 [INFO] Full transcript: 
-2025-08-27 16:57:02,939 [DEBUG] {
+2025-08-27 17:12:17,773 [INFO] Wrote complete transcript to advanced_transcript.json
+2025-08-27 17:12:17,773 [INFO] Full transcript: 
+2025-08-27 17:12:17,776 [DEBUG] {
   "audio_file": "audio/samples/Arabic_english_mix_optimized.wav",
   "segment_count": 4,
   "transcribed_segments": [

@@ -1,15 +1,65 @@
-[INFO] Starting test of fixed language detection module
-[INFO] Testing detect_languages with audio file: audio/samples/Scenario1_20250323_S1056_New Postpaid Activation1.mp3
-[INFO] Converting audio/samples/Scenario1_20250323_S1056_New Postpaid Activation1.mp3 to audio/samples/Scenario1_20250323_S1056_New Postpaid Activation1.wav
-[DEBUG] subprocess.call(['ffmpeg', '-y', '-f', 'mp3', '-i', 'audio/samples/Scenario1_20250323_S1056_New Postpaid Activation1.mp3', '-acodec', 'pcm_s16le', '-vn', '-f', 'wav', '-'])
-[INFO] Converting stereo to mono
-[INFO] Converting sample rate from 44100Hz to 16000Hz
-[INFO] Successfully converted to audio/samples/Scenario1_20250323_S1056_New Postpaid Activation1.wav
-[INFO] Using converted audio file: audio/samples/Scenario1_20250323_S1056_New Postpaid Activation1.wav
-[DEBUG] Connecting to LID container at: localhost:5003
-[DEBUG] Added ws:// prefix. Using host URL: ws://localhost:5003
-[INFO] Starting continuous language identification
-[DEBUG] Recognition stopped/canceled event received
-[INFO] Wrote segments to fixed_module_segments.json
-[INFO] Segments written to: fixed_module_segments.json
-[INFO] Segments file exists: 105 bytes
+2025-08-27 19:08:12,866 [DEBUG] Loaded variables from .env
+2025-08-27 19:08:12,867 [INFO] Connecting to LID container at ws://localhost:5003 (host-only).
+2025-08-27 19:08:12,868 [DEBUG] LID languages: en-US, ar-SA
+2025-08-27 19:08:12,869 [INFO] Starting continuous LID…
+2025-08-27 19:08:14,038 [DEBUG] Detected en-US from 0.00s to 1.50s
+2025-08-27 19:08:14,737 [DEBUG] Detected en-US from 1.50s to 2.50s
+2025-08-27 19:08:15,137 [DEBUG] Detected en-US from 2.50s to 3.50s
+2025-08-27 19:08:15,952 [DEBUG] Detected en-US from 3.50s to 4.50s
+2025-08-27 19:08:16,338 [DEBUG] Detected en-US from 4.50s to 5.50s
+2025-08-27 19:08:16,824 [DEBUG] Detected ar-SA from 5.50s to 6.50s
+2025-08-27 19:08:17,543 [DEBUG] Detected ar-SA from 6.50s to 7.50s
+2025-08-27 19:08:17,951 [DEBUG] Detected ar-SA from 7.50s to 8.50s
+2025-08-27 19:08:18,738 [DEBUG] Detected en-US from 8.50s to 9.50s
+2025-08-27 19:08:18,860 [DEBUG] Detected en-US from 9.50s to 10.50s
+2025-08-27 19:08:19,355 [DEBUG] Detected en-US from 10.50s to 11.50s
+2025-08-27 19:08:19,925 [DEBUG] Detected ar-SA from 11.50s to 12.50s
+2025-08-27 19:08:20,437 [DEBUG] Detected ar-SA from 12.50s to 13.50s
+2025-08-27 19:08:20,940 [DEBUG] Detected ar-SA from 13.50s to 14.50s
+2025-08-27 19:08:21,535 [DEBUG] Detected ar-SA from 14.50s to 15.50s
+2025-08-27 19:08:22,239 [DEBUG] Detected en-US from 15.50s to 16.50s
+2025-08-27 19:08:22,540 [DEBUG] Detected en-US from 16.50s to 17.50s
+2025-08-27 19:08:23,224 [DEBUG] Detected en-US from 17.50s to 18.50s
+2025-08-27 19:08:23,437 [DEBUG] Detected ar-SA from 18.50s to 19.50s
+2025-08-27 19:08:23,954 [DEBUG] Detected ar-SA from 19.50s to 20.50s
+2025-08-27 19:08:24,174 [DEBUG] Detected ar-SA from 20.50s to 21.50s
+2025-08-27 19:08:24,741 [DEBUG] Detected en-US from 21.50s to 22.50s
+2025-08-27 19:08:25,020 [DEBUG] Detected en-US from 22.50s to 23.50s
+2025-08-27 19:08:25,437 [DEBUG] Detected en-US from 23.50s to 24.50s
+2025-08-27 19:08:25,627 [DEBUG] Detected en-US from 24.50s to 25.50s
+2025-08-27 19:08:25,938 [DEBUG] Detected en-US from 25.50s to 26.50s
+2025-08-27 19:08:26,139 [DEBUG] Detected en-US from 26.50s to 27.50s
+2025-08-27 19:08:26,555 [DEBUG] Detected ar-SA from 27.50s to 28.50s
+2025-08-27 19:08:26,821 [DEBUG] Detected en-US from 28.50s to 29.50s
+2025-08-27 19:08:27,152 [DEBUG] Detected en-US from 29.50s to 30.50s
+2025-08-27 19:08:27,370 [DEBUG] Detected en-US from 30.50s to 31.50s
+2025-08-27 19:08:27,658 [DEBUG] Detected en-US from 31.50s to 32.50s
+2025-08-27 19:08:28,037 [DEBUG] Detected en-US from 32.50s to 33.50s
+2025-08-27 19:08:28,352 [DEBUG] Detected ar-SA from 33.50s to 34.50s
+2025-08-27 19:08:28,771 [DEBUG] Detected ar-SA from 34.50s to 35.50s
+2025-08-27 19:08:29,039 [DEBUG] Detected ar-SA from 35.50s to 36.50s
+2025-08-27 19:08:29,555 [DEBUG] Detected en-US from 36.50s to 37.50s
+2025-08-27 19:08:29,872 [DEBUG] Detected en-US from 37.50s to 38.50s
+2025-08-27 19:08:30,371 [DEBUG] Detected ar-SA from 38.50s to 39.50s
+2025-08-27 19:08:30,935 [DEBUG] Detected ar-SA from 39.50s to 40.50s
+2025-08-27 19:08:31,521 [DEBUG] Detected ar-SA from 40.50s to 41.85s
+2025-08-27 19:08:31,523 [DEBUG] LID session stopped
+2025-08-27 19:08:31,523 [DEBUG] LID session stopped
+2025-08-27 19:08:31,653 [INFO] Wrote 12 language segments to hybrid_segments.json
+2025-08-27 19:08:31,685 [INFO] Segments to transcribe after merge: 12
+2025-08-27 19:08:31,685 [WARNING] Endpoint provided without /speech/ path; falling back to REGION mode. (Given: https://eastus2.stt.speech.microsoft.com)
+2025-08-27 19:08:31,685 [INFO] Azure STT mode: REGION from environment.
+2025-08-27 19:08:31,685 [INFO] [1/12] en-US 0.00s → 5.50s (Azure STT)
+2025-08-27 19:08:35,167 [INFO] [2/12] ar-SA 5.50s → 8.50s (Azure STT)
+2025-08-27 19:08:37,935 [INFO] [3/12] en-US 8.50s → 11.50s (Azure STT)
+2025-08-27 19:08:40,585 [INFO] [4/12] ar-SA 11.50s → 15.50s (Azure STT)
+2025-08-27 19:08:43,620 [INFO] [5/12] en-US 15.50s → 18.50s (Azure STT)
+2025-08-27 19:08:46,250 [INFO] [6/12] ar-SA 18.50s → 21.50s (Azure STT)
+2025-08-27 19:08:48,971 [INFO] [7/12] en-US 21.50s → 27.50s (Azure STT)
+2025-08-27 19:08:52,917 [INFO] [8/12] ar-SA 27.50s → 28.50s (Azure STT)
+2025-08-27 19:08:54,834 [INFO] [9/12] en-US 28.50s → 33.50s (Azure STT)
+2025-08-27 19:08:58,149 [INFO] [10/12] ar-SA 33.50s → 36.50s (Azure STT)
+2025-08-27 19:09:00,870 [INFO] [11/12] en-US 36.50s → 38.50s (Azure STT)
+2025-08-27 19:09:03,119 [INFO] [12/12] ar-SA 38.50s → 41.85s (Azure STT)
+2025-08-27 19:09:05,822 [INFO] Wrote complete transcript to hybrid_transcript.json
+2025-08-27 19:09:05,822 [INFO] Full transcript: [ar-SA] لديه مشكلة في تسجيل الدخول لحسابي. [en-US] Can you tell me what the error message you're seeing? [ar-SA] تظهر لي رسالة تقول إن كلمة المرور غير صحيحة. [en-US] Let me check your account. What's your e-mail address? [ar-SA] آه، بريدي الإلكتروني هو أحمد وان تو ثري. [en-US] At example.com. [ar-SA] حسنا. [en-US] Look, I've reset your password. You'll get an e-mail shortly with the instructions moment. [ar-SA] ممتاز، شكرا جزيلا. [en-US] Let us know if you need anything else I can. [ar-SA] أكيد، شكرا مرة ثانيه.

@@ -1,483 +1,377 @@
 """
-multilingual_transcriber.py
+Advanced multilingual transcription against Azure Speech containers.
 
-Multilingual speech recognition with persistent container connections.
-- Detects language segments (via LID container) and routes segments to the correct STT container.
-- Uses canonical BCP-47 casing, mapping variants to supported targets.
-- Reuses container SpeechConfig and performs robust recognition with fallback.
-- Parallelizes segment transcription with a small thread pool.
+- Verifies containers via /ready and /status.
+- Uses Speech SDK host auth (ws://...) per official docs.
+- Streams 16 kHz, 16-bit PCM mono via PushAudioInputStream (no temp files).
+- Processes segments per-language sequentially to keep containers happy.
+- Logs full cancellation diagnostics.
+
+Requires:
+  pip install azure-cognitiveservices-speech requests
+
+Environment (optional):
+  SPEECH_LID_HOST           (default: ws://localhost:5003)  # Only used by your detect_languages()
+  SPEECH_EN_US_HOST         (default: ws://localhost:5004)
+  SPEECH_AR_SA_HOST         (default: ws://localhost:5005)
+  SPEECH_CONTAINER_HTTP_MAP (optional) JSON map of http probes if your WS ports differ, e.g.:
+      {"ws://localhost:5004": "http://localhost:5004", "ws://localhost:5005": "http://localhost:5005"}
 """
 
 import os
-import logging
 import json
+import wave
 import time
 import uuid
-import wave
-import tempfile
-import re
-import threading
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Dict, List, Optional, Any
+import logging
+import audioop
+import requests
+from concurrent.futures import ThreadPoolExecutor
+from typing import Dict, List, Tuple, Optional
 
 import azure.cognitiveservices.speech as speechsdk
 from app.language_detect_improved import detect_languages
 
-
-# -----------------------------
-# Logging
-# -----------------------------
+# ---------- logging ----------
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
+        logging.StreamHandler(),
         logging.FileHandler(
             "advanced_transcription_test.txt", mode="w", encoding="utf-8"
         ),
-        logging.StreamHandler(),
     ],
 )
-log = logging.getLogger(__name__)
+log = logging.getLogger("adv-stt")
 
 
-# -----------------------------
-# Language utils
-# -----------------------------
-LANG_NORMALIZE_RE = re.compile(r"[^A-Za-z\-]")
+# ---------- container health ----------
+def http_base_for_ws(ws_url: str) -> str:
+    """Translate ws://host:port to http://host:port for readiness/status probes."""
+    try:
+        mapping_json = os.getenv("SPEECH_CONTAINER_HTTP_MAP")
+        if mapping_json:
+            m = json.loads(mapping_json)
+            if ws_url in m:
+                return m[ws_url]
+    except Exception:
+        pass
+    if ws_url.startswith("ws://"):
+        return "http://" + ws_url[len("ws://") :]
+    if ws_url.startswith("wss://"):
+        return "https://" + ws_url[len("wss://") :]
+    return ws_url
 
 
-def normalize_lang(code: str) -> str:
-    """Return canonical BCP-47 casing, e.g., 'en-US' from 'en-us' / 'EN_us' / 'en'."""
-    c = LANG_NORMALIZE_RE.sub("", (code or "").strip())
-    if not c:
-        return ""
-    parts = c.replace("_", "-").split("-")
-    if len(parts) == 1:
-        return parts[0].lower()
-    return f"{parts[0].lower()}-{parts[1].upper()}"
+def probe_container(ws_host: str, timeout=5.0) -> Tuple[bool, str]:
+    """Check /ready and /status for a Speech container."""
+    base = http_base_for_ws(ws_host).rstrip("/")
+    try:
+        r1 = requests.get(f"{base}/ready", timeout=timeout)
+        r2 = requests.get(f"{base}/status", timeout=timeout)
+        ok = (r1.status_code == 200) and (r2.status_code == 200)
+        msg = f"/ready={r1.status_code} /status={r2.status_code}"
+        return ok, msg
+    except Exception as e:
+        return False, f"probe error: {e}"
 
 
-SUPPORTED_LANGS = {"en-US", "ar-SA"}
-
-
-def collapse_to_supported_lang(lang: str) -> Optional[str]:
+# ---------- audio helpers ----------
+def read_segment_as_pcm16_mono_16k(
+    wav_path: str, start_sec: float, duration_sec: float
+) -> bytes:
     """
-    Map arbitrary BCP-47 to one of the supported container languages.
-    Example: 'en', 'en-GB' -> 'en-US'; 'ar', 'ar-EG' -> 'ar-SA'
+    Extract a segment from a WAV file and convert to 16 kHz, 16-bit PCM mono.
+    Returns raw PCM bytes ready to push into PushAudioInputStream.
     """
-    if not lang:
-        return None
-    base = lang.split("-")[0].lower()
-    if base == "en":
-        return "en-US"
-    if base == "ar":
-        return "ar-SA"
-    lang_norm = normalize_lang(lang)
-    return lang_norm if lang_norm in SUPPORTED_LANGS else None
+    with wave.open(wav_path, "rb") as wf:
+        src_ch = wf.getnchannels()
+        src_sampwidth = wf.getsampwidth()
+        src_rate = wf.getframerate()
+
+        start_frame = max(0, int(start_sec * src_rate))
+        frames_to_read = int(duration_sec * src_rate)
+        wf.setpos(min(start_frame, wf.getnframes()))
+        raw = wf.readframes(frames_to_read)
+
+    # 1) to mono
+    if src_ch > 1:
+        # average channels
+        raw = audioop.tomono(raw, src_sampwidth, 0.5, 0.5)
+
+    # 2) to 16-bit
+    if src_sampwidth != 2:
+        raw = audioop.lin2lin(raw, src_sampwidth, 2)
+
+    # 3) resample to 16k
+    if src_rate != 16000:
+        raw, _state = audioop.ratecv(raw, 2, 1, src_rate, 16000, None)
+
+    return raw
 
 
-# -----------------------------
-# Container connection
-# -----------------------------
-class ContainerConnection:
-    """Manages a persistent connection (SpeechConfig) to a speech container."""
-
-    def __init__(self, host: str, language: Optional[str] = None):
+# ---------- recognizer wrapper ----------
+class STTContainer:
+    def __init__(self, host_ws: str, locale: str):
         """
-        Args:
-            host: The WebSocket host address (e.g., 'ws://localhost:5004' or 'wss://...').
-            language: Language code for STT containers (None for LID). Canonical casing will be applied.
+        host_ws: e.g. ws://localhost:5004
+        locale:  e.g. en-US, ar-SA
         """
-        self.host = host
-        self.language = normalize_lang(language) if language else None
-        self.speech_config: Optional[speechsdk.SpeechConfig] = None
-        self.is_ready: bool = False
-        self._initialize()
+        self.host = host_ws.rstrip("/")  # SDK is fine with no trailing slash
+        self.locale = locale
+        self.speech_config = speechsdk.SpeechConfig(host=self.host)
+        # IMPORTANT: for containers you generally should NOT set subscription/region.
+        self.speech_config.speech_recognition_language = locale
 
-    def _initialize(self) -> bool:
-        """Initialize the speech configuration."""
-        log.info(
-            f"Initializing connection to {self.host} for language: {self.language or 'Language Detection'}"
+        # nice-to-have: detailed output
+        self.speech_config.output_format = speechsdk.OutputFormat.Detailed
+
+        # event plumbing happens per recognizer
+
+    def _new_push_stream_and_config(
+        self,
+    ) -> Tuple[speechsdk.audio.PushAudioInputStream, speechsdk.audio.AudioConfig]:
+        fmt = speechsdk.audio.AudioStreamFormat(
+            samples_per_second=16000,
+            bits_per_sample=16,
+            channels=1,
         )
-        try:
-            cfg = speechsdk.SpeechConfig(host=self.host)
+        push_stream = speechsdk.audio.PushAudioInputStream(stream_format=fmt)
+        audio_config = speechsdk.audio.AudioConfig(stream=push_stream)
+        return push_stream, audio_config
 
-            if self.language:
-                cfg.speech_recognition_language = self.language
-
-            # NOTE: do NOT set non-existent PropertyIds (e.g., Speech_SessionTimeout).
-            # If you need segmentation/timeout tuning, use supported properties like:
-            #  - Speech_SegmentationSilenceTimeoutMs
-            #  - SpeechServiceConnection_InitialSilenceTimeoutMs
-            # Only set them if you really need to.
-
-            self.speech_config = cfg
-            self.is_ready = True
-            log.info(f"Successfully initialized connection to {self.host}")
-            return True
-        except Exception as e:
-            self.is_ready = False
-            log.error(f"Failed to initialize connection to {self.host}: {e}")
-            return False
-
-    # ---------- recognition helpers ----------
-
-    def _recognize_continuous(
-        self, audio_config: speechsdk.audio.AudioConfig, expected_duration_sec: float
-    ) -> Dict[str, Any]:
+    def transcribe_pcm16_mono_16k(
+        self, pcm: bytes, log_prefix: str
+    ) -> Tuple[str, Optional[str], Optional[str]]:
         """
-        Run continuous recognition to collect multiple utterances for a segment.
-        Returns dict: {"status": "success"/"nomatch"/"error", "transcript"|"note"|"error"}.
+        Streams raw PCM into the container and returns (text, cancel_reason, cancel_details).
         """
-        try:
-            recognizer = speechsdk.SpeechRecognizer(
-                speech_config=self.speech_config, audio_config=audio_config
-            )
-        except Exception as e:
-            return {"status": "error", "error": f"Recognizer init failed: {e}"}
-
-        done = threading.Event()
-        transcript_parts: List[str] = []
-        err: List[Optional[str]] = [None]
-
-        def on_recognized(evt):
-            try:
-                if (
-                    evt.result.reason == speechsdk.ResultReason.RecognizedSpeech
-                    and evt.result.text
-                ):
-                    transcript_parts.append(evt.result.text)
-            except Exception as ex:
-                err[0] = f"recognized handler error: {ex}"
-                done.set()
-
-        def on_canceled(evt):
-            try:
-                details = getattr(evt, "error_details", None)
-                reason = getattr(evt, "reason", None)
-                err[0] = f"Canceled ({reason}): {details}"
-            finally:
-                done.set()
-
-        def on_stopped(_):
-            done.set()
-
-        recognizer.recognized.connect(on_recognized)
-        recognizer.canceled.connect(on_canceled)
-        recognizer.session_stopped.connect(on_stopped)
-
-        try:
-            recognizer.start_continuous_recognition()
-            # Allow buffer beyond audio length
-            wait_timeout = max(20.0, min(180.0, expected_duration_sec * 1.5 + 5.0))
-            done.wait(wait_timeout)
-        finally:
-            try:
-                recognizer.stop_continuous_recognition()
-            except Exception:
-                pass
-
-        if err[0]:
-            return {"status": "error", "error": err[0]}
-
-        text = " ".join(transcript_parts).strip()
-        if not text:
-            return {"status": "nomatch", "note": "No speech recognized"}
-        return {"status": "success", "transcript": text}
-
-    def _recognize_once(
-        self, audio_config: speechsdk.audio.AudioConfig
-    ) -> Dict[str, Any]:
-        """Single-utterance recognition fallback."""
-        try:
-            recognizer = speechsdk.SpeechRecognizer(
-                speech_config=self.speech_config, audio_config=audio_config
-            )
-            res = recognizer.recognize_once()
-        except Exception as e:
-            return {"status": "error", "error": f"recognize_once failed to start: {e}"}
-
-        if res.reason == speechsdk.ResultReason.RecognizedSpeech:
-            return {"status": "success", "transcript": res.text}
-        if res.reason == speechsdk.ResultReason.NoMatch:
-            return {"status": "nomatch", "note": "No speech recognized"}
-        if res.reason == speechsdk.ResultReason.Canceled:
-            try:
-                details = speechsdk.CancellationDetails.from_result(res)
-                return {
-                    "status": "error",
-                    "error": f"Canceled ({details.reason}): {details.error_details}",
-                }
-            except Exception:
-                return {
-                    "status": "error",
-                    "error": "Canceled (unknown): Unknown details",
-                }
-        return {"status": "error", "error": f"Unexpected result: {res.reason}"}
-
-    # ---------- public API ----------
-
-    def transcribe_segment(
-        self, audio_file: str, start_sec: float, duration_sec: float
-    ) -> Dict[str, Any]:
-        """
-        Transcribe a segment of audio using this connection.
-
-        Args:
-            audio_file: Path to the full audio file (wav)
-            start_sec: Start time (seconds)
-            duration_sec: Duration (seconds)
-        """
-        if not self.is_ready or not self.speech_config:
-            return {"status": "error", "error": "Connection not initialized"}
-
-        temp_dir = tempfile.gettempdir()
-        unique_id = str(uuid.uuid4())[:8]
-        temp_file = os.path.join(
-            temp_dir,
-            f"segment_{self.language or 'lid'}_{int(start_sec)}_{int(duration_sec)}_{unique_id}.wav",
+        push_stream, audio_cfg = self._new_push_stream_and_config()
+        recognizer = speechsdk.SpeechRecognizer(
+            speech_config=self.speech_config, audio_config=audio_cfg
         )
 
+        # attach event handlers to glean detail if it cancels
+        cancel_reason_holder = {"reason": None, "details": None, "error_code": None}
+
+        def _canceled(evt: speechsdk.SpeechRecognitionCanceledEventArgs):
+            cancel_reason_holder["reason"] = str(evt.reason)
+            cancel_reason_holder["details"] = str(evt.error_details)
+            cancel_reason_holder["error_code"] = str(evt.error_code)
+
+        recognizer.canceled.connect(_canceled)
+
+        # Helpful to pre-open the websocket to force fast failures
         try:
-            # Extract segment to a temporary file (bounds-safe)
-            with wave.open(audio_file, "rb") as wf:
-                channels = wf.getnchannels()
-                sample_width = wf.getsampwidth()
-                frame_rate = wf.getframerate()
-                total_frames = wf.getnframes()
-
-                start_frame = max(0, int(start_sec * frame_rate))
-                if start_frame >= total_frames:
-                    return {"status": "nomatch", "note": "Segment starts after EOF"}
-
-                num_frames_req = int(duration_sec * frame_rate)
-                num_frames = max(0, min(num_frames_req, total_frames - start_frame))
-
-                wf.setpos(start_frame)
-                frames = wf.readframes(num_frames)
-
-            with wave.open(temp_file, "wb") as segment_file:
-                segment_file.setnchannels(channels)
-                segment_file.setsampwidth(sample_width)
-                segment_file.setframerate(frame_rate)
-                segment_file.writeframes(frames)
-
-            log.info(f"Created temporary segment file: {temp_file}")
-
-            audio_config = speechsdk.audio.AudioConfig(filename=temp_file)
-
-            # Try continuous first (captures multiple utterances), then fallback
-            result = self._recognize_continuous(
-                audio_config, expected_duration_sec=duration_sec
-            )
-            if result["status"] == "nomatch" or result["status"] == "error":
-                log.debug(
-                    f"Continuous recognition returned {result['status']}; trying recognize_once fallback..."
-                )
-                result = self._recognize_once(audio_config)
-
-            if result["status"] == "success":
-                log.info(f"Transcribed: {result['transcript']}")
-            elif result["status"] == "nomatch":
-                log.warning("No speech recognized in this segment")
-            else:
-                log.error(f"Recognition error: {result.get('error')}")
-
-            return result
-
+            conn = speechsdk.Connection.from_recognizer(recognizer)
+            conn.open(True)
         except Exception as e:
-            log.error(f"Error processing segment: {e}")
-            return {"status": "error", "error": str(e)}
+            log.error(f"{log_prefix} connection open failed: {e}")
 
-        finally:
-            # Clean up temporary file with retry (Windows file handles can linger)
-            for retry in range(3):
-                try:
-                    if os.path.exists(temp_file):
-                        time.sleep(0.5)
-                        os.remove(temp_file)
-                        log.debug(f"Removed temporary file: {temp_file}")
-                        break
-                except Exception as ex:
-                    log.warning(
-                        f"Failed to remove temporary file (attempt {retry+1}/3): {ex}"
-                    )
-                    if retry == 2:
-                        log.warning("Leaving temp file for system cleanup.")
+        # stream audio
+        push_stream.write(pcm)
+        push_stream.close()
+
+        # single-utterance recognition for a short segment
+        result = recognizer.recognize_once()
+
+        if result.reason == speechsdk.ResultReason.RecognizedSpeech:
+            return result.text, None, None
+
+        if result.reason == speechsdk.ResultReason.NoMatch:
+            return "", "NoMatch", "No speech recognized"
+
+        if result.reason == speechsdk.ResultReason.Canceled:
+            details = speechsdk.CancellationDetails(result)
+            # Prefer handler’s values if present
+            cr = cancel_reason_holder["reason"] or str(details.reason)
+            ed = cancel_reason_holder["details"] or str(details.error_details)
+            ec = cancel_reason_holder["error_code"]
+            msg = f"{cr}: {ed}" + (f" (code={ec})" if ec else "")
+            return "", "Canceled", msg
+
+        # unexpected
+        return "", "Unknown", f"Unhandled result.reason={result.reason}"
 
 
-# -----------------------------
-# Orchestration
-# -----------------------------
+# ---------- pipeline ----------
 def advanced_transcribe_with_language():
-    """End-to-end multilingual transcription with persistent connections."""
     log.info("=== TESTING ADVANCED MULTILINGUAL TRANSCRIPTION ===")
 
-    # ---- Configuration (override with env vars if desired) ----
+    # --- config ---
     lid_host = os.getenv(
-        "LID_HOST", "ws://localhost:5003"
-    )  # Language detection container
-    audio_file = os.getenv(
-        "AUDIO_FILE", "audio/samples/Arabic_english_mix_optimized.wav"
-    )
-    segments_file = os.getenv("SEGMENTS_FILE", "advanced_segments.json")
-    transcript_file = os.getenv("TRANSCRIPT_FILE", "advanced_transcript.json")
+        "SPEECH_LID_HOST", "ws://localhost:5003"
+    )  # your LID container (used by detect_languages)
+    audio_file = "audio/samples/Arabic_english_mix_optimized.wav"
+    locales = ["en-US", "ar-SA"]
+    segments_out = "advanced_segments.json"
+    transcript_out = "advanced_transcript.json"
 
-    # Supported STT containers by canonical language key
     stt_host_map: Dict[str, str] = {
-        "en-US": os.getenv("EN_US_STT_HOST", "ws://localhost:5004"),
-        "ar-SA": os.getenv("AR_SA_STT_HOST", "ws://localhost:5005"),
+        "en-US": os.getenv("SPEECH_EN_US_HOST", "ws://localhost:5004"),
+        "ar-SA": os.getenv("SPEECH_AR_SA_HOST", "ws://localhost:5005"),
     }
-
-    # Languages to consider in LID
-    languages = [normalize_lang("en-US"), normalize_lang("ar-SA")]
 
     log.info(f"Using language detection host: {lid_host}")
-    log.info(f"Languages: {languages}")
+    log.info(f"Languages: {locales}")
     log.info(f"Audio file: {os.path.abspath(audio_file)}")
-    log.info(f"Output segments: {os.path.abspath(segments_file)}")
-    log.info(f"Output transcript: {os.path.abspath(transcript_file)}")
+    log.info(f"Output segments: {os.path.abspath(segments_out)}")
+    log.info(f"Output transcript: {os.path.abspath(transcript_out)}")
     log.info(f"STT host mapping: {stt_host_map}")
 
-    # Guard inputs
-    if not os.path.exists(audio_file):
-        raise FileNotFoundError(f"Audio file not found: {os.path.abspath(audio_file)}")
+    # --- Step 0: sanity-check STT containers are alive and licensed ---
+    for lang, ws in stt_host_map.items():
+        ok, msg = probe_container(ws)
+        if not ok:
+            log.error(f"[{lang}] container {ws} not ready: {msg}")
+        else:
+            log.info(f"[{lang}] container {ws} OK: {msg}")
 
-    # ---- Step 1: Detect language segments (continuous mode for multi-language audio)
+    # --- Step 1: LID segments ---
     log.info("\nStep 1: Detecting language segments...")
-    _ = detect_languages(
+    lid_result = detect_languages(
         audio_file=audio_file,
         lid_host=lid_host,
-        languages=languages,
-        out_segments=segments_file,
+        languages=locales,
+        out_segments=segments_out,
         timeout_sec=60,
         logger=log,
-        _force_continuous=True,
+        _force_continuous=True,  # you were already doing continuous; keep it
     )
 
-    # ---- Step 2: Load segments
+    # --- Step 2: load segments ---
     log.info("\nStep 2: Loading language segments...")
-    with open(segments_file, "r", encoding="utf-8") as f:
-        segments_data = json.load(f)
-
-    segments: List[Dict[str, Any]] = segments_data.get("segments", [])
+    with open(segments_out, "r", encoding="utf-8") as f:
+        seg_data = json.load(f)
+    segments = seg_data.get("segments", [])
     log.info(f"Found {len(segments)} language segments")
 
-    # ---- Step 3: Persistent connections to STT containers
-    log.info("\nStep 3: Initializing persistent connections to speech containers...")
-    connections: Dict[str, ContainerConnection] = {
-        lang_key: ContainerConnection(host=host, language=lang_key)
-        for lang_key, host in stt_host_map.items()
-    }
+    # group by language to **serialize per-container**
+    by_lang: Dict[str, List[dict]] = {}
+    for s in segments:
+        # your LID returns language keys in various casings; normalize to match map
+        lang = s.get("language")
+        # normalize canonical casing if needed (en-us -> en-US)
+        if lang and lang.lower() == "en-us":
+            lang = "en-US"
+        if lang and lang.lower() == "ar-sa":
+            lang = "ar-SA"
+        s["language"] = lang
+        by_lang.setdefault(lang, []).append(s)
 
-    # Remove any failed connections to avoid cancellations with None-details
-    connections = {k: v for k, v in connections.items() if v.is_ready}
-    if not connections:
-        log.error("All STT connections failed to initialize. Aborting transcription.")
-        final_result = {
-            "audio_file": audio_file,
-            "segment_count": 0,
-            "transcribed_segments": [],
-            "full_transcript": "",
-        }
-        with open(transcript_file, "w", encoding="utf-8") as f:
-            json.dump(final_result, f, indent=2, ensure_ascii=False)
-        return
+    # --- Step 3: Init STT clients ---
+    log.info("\nStep 3: Initializing STT container clients...")
+    clients: Dict[str, STTContainer] = {}
+    for lang, host in stt_host_map.items():
+        try:
+            clients[lang] = STTContainer(host_ws=host, locale=lang)
+            log.info(f"Initialized client for {lang} at {host}")
+        except Exception as e:
+            log.error(f"Failed to init client for {lang} at {host}: {e}")
 
-    # ---- Step 4: Transcribe each segment (parallel, modest concurrency)
-    log.info("\nStep 4: Transcribing each language segment...")
+    # --- Step 4: Transcribe (serialize per language, small parallelism across languages) ---
+    log.info("\nStep 4: Transcribing segments per language...")
 
-    def transcribe_one(segment: Dict[str, Any]) -> Dict[str, Any]:
-        raw_language = normalize_lang(segment.get("language", ""))
-        language = collapse_to_supported_lang(raw_language)
+    # function to process one language’s queue sequentially
+    def process_language(lang: str) -> List[dict]:
+        out: List[dict] = []
+        client = clients.get(lang)
+        if not client:
+            for seg in by_lang.get(lang, []):
+                out.append(
+                    {
+                        "language": lang,
+                        "start_time": seg["start_hns"],
+                        "duration": seg["end_hns"] - seg["start_hns"],
+                        "start_sec": seg["start_hns"] / 10_000_000.0,
+                        "duration_sec": (seg["end_hns"] - seg["start_hns"])
+                        / 10_000_000.0,
+                        "transcript": "",
+                        "error": f"No client for language {lang}",
+                    }
+                )
+            return out
 
-        start_time_hns = int(segment.get("start_hns", 0))
-        end_time_hns = int(segment.get("end_hns", 0))
-        duration_hns = max(0, end_time_hns - start_time_hns)
+        for seg in by_lang.get(lang, []):
+            start_hns = seg["start_hns"]
+            end_hns = seg["end_hns"]
+            start_sec = start_hns / 10_000_000.0
+            duration_sec = (end_hns - start_hns) / 10_000_000.0
+            pretty = f"[{lang}] {start_sec:.3f}s–{start_sec+duration_sec:.3f}s"
+            log.info(f"Transcribing {pretty}")
 
-        start_sec = start_time_hns / 10_000_000.0  # HNS (100ns) -> seconds
-        duration_sec = duration_hns / 10_000_000.0
-
-        log.info(
-            f"Processing segment: {raw_language} → {language} from {start_sec:.2f}s to {(start_sec + duration_sec):.2f}s"
-        )
-
-        rec: Dict[str, Any] = {
-            "language": language or raw_language,
-            "start_time": start_time_hns,
-            "duration": duration_hns,
-            "start_sec": start_sec,
-            "duration_sec": duration_sec,
-        }
-
-        if duration_sec < 0.25:
-            rec["transcript"] = ""
-            rec["note"] = "Skipped very short segment"
-            return rec
-
-        if not language or language not in connections:
-            log.warning(
-                f"No connection for language '{raw_language}' → '{language}'. Skipping segment."
-            )
-            rec["transcript"] = ""
-            rec["note"] = "Unsupported language"
-            return rec
-
-        result_seg = connections[language].transcribe_segment(
-            audio_file=audio_file, start_sec=start_sec, duration_sec=duration_sec
-        )
-
-        if result_seg["status"] == "success":
-            rec["transcript"] = result_seg["transcript"]
-        elif result_seg["status"] == "nomatch":
-            rec["transcript"] = ""
-            rec["note"] = "No speech recognized"
-        else:
-            rec["transcript"] = ""
-            rec["error"] = result_seg.get("error", "Unknown error")
-        return rec
-
-    transcribed_segments: List[Dict[str, Any]] = []
-    max_workers = min(
-        4, max(1, (os.cpu_count() or 2) // 2)
-    )  # keep containers responsive
-    with ThreadPoolExecutor(max_workers=max_workers) as ex:
-        futures = [ex.submit(transcribe_one, seg) for seg in segments]
-        for fut in as_completed(futures):
             try:
-                transcribed_segments.append(fut.result())
+                pcm = read_segment_as_pcm16_mono_16k(
+                    audio_file, start_sec, duration_sec
+                )
+                text, cancel_reason, cancel_details = client.transcribe_pcm16_mono_16k(
+                    pcm, log_prefix=f"{pretty}"
+                )
+                rec = {
+                    "language": lang,
+                    "start_time": start_hns,
+                    "duration": end_hns - start_hns,
+                    "start_sec": start_sec,
+                    "duration_sec": duration_sec,
+                    "transcript": text or "",
+                }
+                if cancel_reason:
+                    rec["error"] = f"{cancel_reason}: {cancel_details}"
+                    log.error(f"{pretty} {rec['error']}")
+                elif not text:
+                    rec["note"] = "No speech recognized"
+                    log.warning(f"{pretty} no speech recognized")
+                else:
+                    log.info(f"{pretty} -> {text}")
+                out.append(rec)
             except Exception as e:
-                log.error(f"Segment transcription failed: {e}")
+                log.exception(f"{pretty} streaming error: {e}")
+                out.append(
+                    {
+                        "language": lang,
+                        "start_time": start_hns,
+                        "duration": end_hns - start_hns,
+                        "start_sec": start_sec,
+                        "duration_sec": duration_sec,
+                        "transcript": "",
+                        "error": f"Exception: {e}",
+                    }
+                )
+        return out
 
-    # ---- Step 5: Assemble final transcript
-    log.info("\nStep 5: Creating final transcript...")
-    transcribed_segments_sorted = sorted(
-        transcribed_segments, key=lambda x: x["start_time"]
-    )
-    full_transcript = " ".join(
+    results: List[dict] = []
+    # slight parallelism: run English queue and Arabic queue in parallel, but each queue is serial
+    with ThreadPoolExecutor(max_workers=min(2, len(by_lang))) as ex:
+        futs = []
+        for lang in by_lang.keys():
+            futs.append(ex.submit(process_language, lang))
+        for f in futs:
+            results.extend(f.result())
+
+    # --- Step 5: Final glue ---
+    results_sorted = sorted(results, key=lambda r: r["start_time"])
+    full_text = " ".join(
         [
-            f"[{seg['language']}] {seg.get('transcript', '').strip()}"
-            for seg in transcribed_segments_sorted
-            if seg.get("transcript")
+            f"[{r['language']}] {r['transcript']}".strip()
+            for r in results_sorted
+            if r.get("transcript")
         ]
-    ).strip()
+    )
 
-    final_result = {
+    final = {
         "audio_file": audio_file,
-        "segment_count": len(transcribed_segments_sorted),
-        "transcribed_segments": transcribed_segments_sorted,
-        "full_transcript": full_transcript,
+        "segment_count": len(results_sorted),
+        "transcribed_segments": results_sorted,
+        "full_transcript": full_text,
     }
 
-    try:
-        with open(transcript_file, "w", encoding="utf-8") as f:
-            json.dump(final_result, f, indent=2, ensure_ascii=False)
-        log.info(f"Wrote complete transcript to {transcript_file}")
-    except Exception as e:
-        log.error(f"Failed to write transcript file: {e}")
+    with open(transcript_out, "w", encoding="utf-8") as f:
+        json.dump(final, f, indent=2, ensure_ascii=False)
 
-    log.info(f"Full transcript: {final_result['full_transcript']}")
-    log.debug(json.dumps(final_result, ensure_ascii=False, indent=2))
+    log.info("\nStep 5: Done")
+    log.info(f"Wrote complete transcript to {transcript_out}")
+    log.info(f"Full transcript: {full_text}")
 
 
 if __name__ == "__main__":

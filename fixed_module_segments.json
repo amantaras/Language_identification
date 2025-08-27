@@ -1,4 +1,252 @@
 {
-  "audio": "audio/samples/Scenario1_20250323_S1056_New Postpaid Activation1.mp3",
-  "segments": []
+  "AudioFile": "audio\\samples\\Arabic_english_mix_optimized.wav",
+  "Segments": [
+    {
+      "Language": "en-us",
+      "StartTimeHns": 0,
+      "EndTimeHns": 15000000,
+      "DurationHns": 15000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 14990000,
+      "EndTimeHns": 24990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 24990000,
+      "EndTimeHns": 34990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 34990000,
+      "EndTimeHns": 44990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 44990000,
+      "EndTimeHns": 54990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 54990000,
+      "EndTimeHns": 64990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 64990000,
+      "EndTimeHns": 74990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 74990000,
+      "EndTimeHns": 84990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 84990000,
+      "EndTimeHns": 94990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 94990000,
+      "EndTimeHns": 104990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 104990000,
+      "EndTimeHns": 114990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 114990000,
+      "EndTimeHns": 124990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 124990000,
+      "EndTimeHns": 134990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 134990000,
+      "EndTimeHns": 144990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 144990000,
+      "EndTimeHns": 154990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 154990000,
+      "EndTimeHns": 164990000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 165000000,
+      "EndTimeHns": 175000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 175000000,
+      "EndTimeHns": 185000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 185000000,
+      "EndTimeHns": 195000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 195000000,
+      "EndTimeHns": 205000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 205000000,
+      "EndTimeHns": 215000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 215000000,
+      "EndTimeHns": 225000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 225000000,
+      "EndTimeHns": 235000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 235000000,
+      "EndTimeHns": 245000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 245000000,
+      "EndTimeHns": 255000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 255000000,
+      "EndTimeHns": 265000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 265000000,
+      "EndTimeHns": 275000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 275000000,
+      "EndTimeHns": 285000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 285000000,
+      "EndTimeHns": 295000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 295000000,
+      "EndTimeHns": 305000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 305000000,
+      "EndTimeHns": 315000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 315000000,
+      "EndTimeHns": 325000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 325000000,
+      "EndTimeHns": 335000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 335000000,
+      "EndTimeHns": 345000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 345000000,
+      "EndTimeHns": 355000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 355000000,
+      "EndTimeHns": 365000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 365000000,
+      "EndTimeHns": 375000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "en-us",
+      "StartTimeHns": 375000000,
+      "EndTimeHns": 385000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 385000000,
+      "EndTimeHns": 395000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 395000000,
+      "EndTimeHns": 405000000,
+      "DurationHns": 10000000
+    },
+    {
+      "Language": "ar-sa",
+      "StartTimeHns": 405000000,
+      "EndTimeHns": 418500000,
+      "DurationHns": 13500000
+    }
+  ],
+  "SegmentCount": 41
 }
