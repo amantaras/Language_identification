@@ -1,151 +1,229 @@
 {
-  "audio_file": "audio/samples/Arabic_english_mix_optimized.wav",
+  "audio_file": "audio\\samples\\Arabic_english_mix_optimized.wav",
   "segment_count": 12,
   "segments": [
     {
-      "language": "en-us",
-      "start_time_hns": 0,
-      "duration_hns": 56190000,
-      "start_sec": 0.0,
-      "duration_sec": 5.619,
-      "transcript": "",
-      "raw": {
-        "error": "canceled",
-        "details": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5004/speech/recognition/interactive/cognitiveservices/v1?language=en-us\nX-ConnectionId: 88d0df9cfc2a44fdb2bd6e0bac869832 SessionId: 88d0df9cfc2a44fdb2bd6e0bac869832"
-      }
+      "Language": "en-US",
+      "StartTimeHns": 0,
+      "DurationHns": 54990000,
+      "IsSkipped": false
     },
     {
-      "language": "ar-sa",
-      "start_time_hns": 53790000,
-      "duration_hns": 32400000,
-      "start_sec": 5.379,
-      "duration_sec": 3.24,
-      "transcript": "",
-      "raw": {
-        "error": "canceled",
-        "details": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5005/speech/recognition/interactive/cognitiveservices/v1?language=ar-sa\nX-ConnectionId: d5bf1c0503224bed9effc295aef49f2a SessionId: d5bf1c0503224bed9effc295aef49f2a"
-      }
+      "Language": "ar-SA",
+      "StartTimeHns": 54990000,
+      "DurationHns": 30000000,
+      "IsSkipped": false
     },
     {
-      "language": "en-us",
-      "start_time_hns": 83790000,
-      "duration_hns": 32400000,
-      "start_sec": 8.379,
-      "duration_sec": 3.24,
-      "transcript": "",
-      "raw": {
-        "error": "canceled",
-        "details": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5004/speech/recognition/interactive/cognitiveservices/v1?language=en-us\nX-ConnectionId: bd7ab0555c3f44c1b5dc8ebcae20198d SessionId: bd7ab0555c3f44c1b5dc8ebcae20198d"
-      }
+      "Language": "en-US",
+      "StartTimeHns": 84990000,
+      "DurationHns": 30000000,
+      "IsSkipped": false
     },
     {
-      "language": "ar-sa",
-      "start_time_hns": 113790000,
-      "duration_hns": 42400000,
-      "start_sec": 11.379,
-      "duration_sec": 4.24,
-      "transcript": "",
-      "raw": {
-        "error": "canceled",
-        "details": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5005/speech/recognition/interactive/cognitiveservices/v1?language=ar-sa\nX-ConnectionId: eab0f6eb572d4fe684ed73080c362d7c SessionId: eab0f6eb572d4fe684ed73080c362d7c"
-      }
+      "Language": "ar-SA",
+      "StartTimeHns": 114990000,
+      "DurationHns": 40000000,
+      "IsSkipped": false
     },
     {
-      "language": "en-us",
-      "start_time_hns": 153790000,
-      "duration_hns": 32410000,
-      "start_sec": 15.379,
-      "duration_sec": 3.241,
-      "transcript": "",
-      "raw": {
-        "error": "canceled",
-        "details": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5004/speech/recognition/interactive/cognitiveservices/v1?language=en-us\nX-ConnectionId: ad61fb66e50e4055a4d33bcc02e654e3 SessionId: ad61fb66e50e4055a4d33bcc02e654e3"
-      }
+      "Language": "en-US",
+      "StartTimeHns": 154990000,
+      "DurationHns": 30010000,
+      "IsSkipped": false
     },
     {
-      "language": "ar-sa",
-      "start_time_hns": 183800000,
-      "duration_hns": 32400000,
-      "start_sec": 18.38,
-      "duration_sec": 3.24,
-      "transcript": "",
-      "raw": {
-        "error": "canceled",
-        "details": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5005/speech/recognition/interactive/cognitiveservices/v1?language=ar-sa\nX-ConnectionId: d2c48d39447a4dbdae880fde2df043be SessionId: d2c48d39447a4dbdae880fde2df043be"
-      }
+      "Language": "ar-SA",
+      "StartTimeHns": 185000000,
+      "DurationHns": 30000000,
+      "IsSkipped": false
     },
     {
-      "language": "en-us",
-      "start_time_hns": 213800000,
-      "duration_hns": 62400000,
-      "start_sec": 21.38,
-      "duration_sec": 6.24,
-      "transcript": "",
-      "raw": {
-        "error": "canceled",
-        "details": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5004/speech/recognition/interactive/cognitiveservices/v1?language=en-us\nX-ConnectionId: b480603325dc49df8a5fdbd4d10f1635 SessionId: b480603325dc49df8a5fdbd4d10f1635"
-      }
+      "Language": "en-US",
+      "StartTimeHns": 215000000,
+      "DurationHns": 60000000,
+      "IsSkipped": false
     },
     {
-      "language": "ar-sa",
-      "start_time_hns": 273800000,
-      "duration_hns": 12400000,
-      "start_sec": 27.38,
-      "duration_sec": 1.24,
-      "transcript": "",
-      "raw": {
-        "error": "canceled",
-        "details": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5005/speech/recognition/interactive/cognitiveservices/v1?language=ar-sa\nX-ConnectionId: 019eddb14b8149c8b9774b64e07fe20a SessionId: 019eddb14b8149c8b9774b64e07fe20a"
-      }
+      "Language": "ar-SA",
+      "StartTimeHns": 275000000,
+      "DurationHns": 10000000,
+      "IsSkipped": false
     },
     {
-      "language": "en-us",
-      "start_time_hns": 283800000,
-      "duration_hns": 52400000,
-      "start_sec": 28.38,
-      "duration_sec": 5.24,
-      "transcript": "",
-      "raw": {
-        "error": "canceled",
-        "details": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5004/speech/recognition/interactive/cognitiveservices/v1?language=en-us\nX-ConnectionId: af71037610584ea0b75ebdc3f9970fbe SessionId: af71037610584ea0b75ebdc3f9970fbe"
-      }
+      "Language": "en-US",
+      "StartTimeHns": 285000000,
+      "DurationHns": 50000000,
+      "IsSkipped": false
     },
     {
-      "language": "ar-sa",
-      "start_time_hns": 333800000,
-      "duration_hns": 32400000,
-      "start_sec": 33.38,
-      "duration_sec": 3.24,
-      "transcript": "",
-      "raw": {
-        "error": "canceled",
-        "details": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5005/speech/recognition/interactive/cognitiveservices/v1?language=ar-sa\nX-ConnectionId: 5f6efe66e5a84bdbab6ead11bba6c2e8 SessionId: 5f6efe66e5a84bdbab6ead11bba6c2e8"
-      }
+      "Language": "ar-SA",
+      "StartTimeHns": 335000000,
+      "DurationHns": 30000000,
+      "IsSkipped": false
     },
     {
-      "language": "en-us",
-      "start_time_hns": 363800000,
-      "duration_hns": 22400000,
-      "start_sec": 36.38,
-      "duration_sec": 2.24,
-      "transcript": "",
-      "raw": {
-        "error": "canceled",
-        "details": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5004/speech/recognition/interactive/cognitiveservices/v1?language=en-us\nX-ConnectionId: 37c8f297966e4dd1a5720dd59df4f7a4 SessionId: 37c8f297966e4dd1a5720dd59df4f7a4"
-      }
+      "Language": "en-US",
+      "StartTimeHns": 365000000,
+      "DurationHns": 20000000,
+      "IsSkipped": false
     },
     {
-      "language": "ar-sa",
-      "start_time_hns": 383800000,
-      "duration_hns": 35900000,
-      "start_sec": 38.38,
-      "duration_sec": 3.59,
-      "transcript": "",
-      "raw": {
-        "error": "canceled",
-        "details": "Connection failed (no connection to the remote host). Internal error: 11. Error details: Failed with error: WS_OPEN_ERROR_UNDERLYING_IO_ERROR\nws://localhost:5005/speech/recognition/interactive/cognitiveservices/v1?language=ar-sa\nX-ConnectionId: 946bff0efb7a40c9867261b196b815ca SessionId: 946bff0efb7a40c9867261b196b815ca"
-      }
+      "Language": "ar-SA",
+      "StartTimeHns": 385000000,
+      "DurationHns": 33500000,
+      "IsSkipped": false
     }
   ],
-  "full_transcript": ""
+  "recognized_results": [
+    {
+      "language": "en-US",
+      "start_hns": 0,
+      "end_hns": 56990000,
+      "transcript": "Hello, thank you for calling. How can I help you today? What happened?",
+      "finals": [
+        {
+          "t": 1756317808.473189,
+          "text": "Hello, thank you for calling. How can I help you today? What happened?"
+        }
+      ]
+    },
+    {
+      "language": "ar-SA",
+      "start_hns": 54990000,
+      "end_hns": 86990000,
+      "transcript": "لديه مشكلة في تسجيل الدخول لحسابي.",
+      "finals": [
+        {
+          "t": 1756317812.1874733,
+          "text": "لديه مشكلة في تسجيل الدخول لحسابي."
+        }
+      ]
+    },
+    {
+      "language": "en-US",
+      "start_hns": 84990000,
+      "end_hns": 116990000,
+      "transcript": "Can you tell me what the error message you're seeing that HA?",
+      "finals": [
+        {
+          "t": 1756317816.087021,
+          "text": "Can you tell me what the error message you're seeing that HA?"
+        }
+      ]
+    },
+    {
+      "language": "ar-SA",
+      "start_hns": 114990000,
+      "end_hns": 156990000,
+      "transcript": "تظهر لي رسالة تقول إن كلمة المرور غير صحيحة.",
+      "finals": [
+        {
+          "t": 1756317820.8741047,
+          "text": "تظهر لي رسالة تقول إن كلمة المرور غير صحيحة."
+        }
+      ]
+    },
+    {
+      "language": "en-US",
+      "start_hns": 154990000,
+      "end_hns": 187000000,
+      "transcript": "Let me check your account. What's your e-mail address?",
+      "finals": [
+        {
+          "t": 1756317824.5192432,
+          "text": "Let me check your account. What's your e-mail address?"
+        }
+      ]
+    },
+    {
+      "language": "ar-SA",
+      "start_hns": 185000000,
+      "end_hns": 217000000,
+      "transcript": "آه، بريدي الإلكتروني هو أحمد وان تو ثري.",
+      "finals": [
+        {
+          "t": 1756317828.271908,
+          "text": "آه، بريدي الإلكتروني هو أحمد وان تو ثري."
+        }
+      ]
+    },
+    {
+      "language": "en-US",
+      "start_hns": 215000000,
+      "end_hns": 277000000,
+      "transcript": "At example.com. Thanks one moment while I look into it.",
+      "finals": [
+        {
+          "t": 1756317831.935686,
+          "text": "At example.com."
+        },
+        {
+          "t": 1756317835.0801926,
+          "text": "Thanks one moment while I look into it."
+        }
+      ]
+    },
+    {
+      "language": "ar-SA",
+      "start_hns": 275000000,
+      "end_hns": 287000000,
+      "transcript": "حسنا، شكرا لك.",
+      "finals": [
+        {
+          "t": 1756317836.7553942,
+          "text": "حسنا، شكرا لك."
+        }
+      ]
+    },
+    {
+      "language": "en-US",
+      "start_hns": 285000000,
+      "end_hns": 337000000,
+      "transcript": "Look, I've reset your password. You'll get an e-mail shortly with the instructions moment.",
+      "finals": [
+        {
+          "t": 1756317842.5068183,
+          "text": "Look, I've reset your password. You'll get an e-mail shortly with the instructions moment."
+        }
+      ]
+    },
+    {
+      "language": "ar-SA",
+      "start_hns": 335000000,
+      "end_hns": 367000000,
+      "transcript": "ممتاز، شكرا جزيلا.",
+      "finals": [
+        {
+          "t": 1756317846.197959,
+          "text": "ممتاز، شكرا جزيلا."
+        }
+      ]
+    },
+    {
+      "language": "en-US",
+      "start_hns": 365000000,
+      "end_hns": 387000000,
+      "transcript": "Let us know if you need anything else.",
+      "finals": [
+        {
+          "t": 1756317848.8168566,
+          "text": "Let us know if you need anything else."
+        }
+      ]
+    },
+    {
+      "language": "ar-SA",
+      "start_hns": 385000000,
+      "end_hns": 420500000,
+      "transcript": "أكيد، شكرا مرة ثانيه.",
+      "finals": [
+        {
+          "t": 1756317852.2956014,
+          "text": "أكيد، شكرا مرة ثانيه."
+        }
+      ]
+    }
+  ],
+  "full_transcript": "[en-US] Hello, thank you for calling. How can I help you today? What happened? [ar-SA] لديه مشكلة في تسجيل الدخول لحسابي. [en-US] Can you tell me what the error message you're seeing that HA? [ar-SA] تظهر لي رسالة تقول إن كلمة المرور غير صحيحة. [en-US] Let me check your account. What's your e-mail address? [ar-SA] آه، بريدي الإلكتروني هو أحمد وان تو ثري. [en-US] At example.com. Thanks one moment while I look into it. [ar-SA] حسنا، شكرا لك. [en-US] Look, I've reset your password. You'll get an e-mail shortly with the instructions moment. [ar-SA] ممتاز، شكرا جزيلا. [en-US] Let us know if you need anything else. [ar-SA] أكيد، شكرا مرة ثانيه."
 }
