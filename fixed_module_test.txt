@@ -1,0 +1,157 @@
+2025-08-28 11:40:54,144 [DEBUG] Loaded variables from .env
+2025-08-28 11:40:54,145 [WARNING] Endpoint provided without /speech/ path; using REGION mode for stability.
+2025-08-28 11:40:54,145 [INFO] Azure STT mode: REGION from environment.
+2025-08-28 11:40:54,151 [INFO] Starting continuous LID…
+2025-08-28 11:40:59,851 [DEBUG] Detected en-US from 0.00s to 1.50s
+2025-08-28 11:40:59,853 [INFO] [STT en-US] START at 0.00s
+2025-08-28 11:41:00,490 [DEBUG] Detected en-US from 1.50s to 2.50s
+2025-08-28 11:41:01,050 [DEBUG] Detected en-US from 2.50s to 3.50s
+2025-08-28 11:41:01,443 [DEBUG] Detected en-US from 3.50s to 4.50s
+2025-08-28 11:41:01,875 [DEBUG] Detected en-US from 4.50s to 5.50s
+2025-08-28 11:41:02,207 [DEBUG] [STT en-US] (NoMatch)
+2025-08-28 11:41:02,558 [DEBUG] Detected ar-SA from 5.50s to 6.50s
+2025-08-28 11:41:03,072 [DEBUG] [STT en-US] ~ hello
+2025-08-28 11:41:03,473 [DEBUG] [STT en-US] ~ hello thank you for
+2025-08-28 11:41:03,774 [DEBUG] [STT en-US] ~ hello thank you for calling
+2025-08-28 11:41:04,378 [DEBUG] [STT en-US] ~ hello thank you for calling how can i
+2025-08-28 11:41:04,681 [DEBUG] [STT en-US] ~ hello thank you for calling how can i help you today
+2025-08-28 11:41:06,266 [DEBUG] [STT en-US] ~ hello thank you for calling how can i help you today what happened
+2025-08-28 11:41:06,294 [INFO] [STT en-US] ✔ Hello, thank you for calling. How can I help you today? What happened?
+2025-08-28 11:41:06,295 [INFO] [STT en-US] STOP → 'Hello, thank you for calling. How can I help you today? What happened?'
+2025-08-28 11:41:06,296 [INFO] [STT ar-SA] START at 5.50s
+2025-08-28 11:41:06,300 [DEBUG] Detected ar-SA from 6.50s to 7.50s
+2025-08-28 11:41:06,301 [DEBUG] Detected ar-SA from 7.50s to 8.50s
+2025-08-28 11:41:06,302 [DEBUG] Detected en-US from 8.50s to 9.50s
+2025-08-28 11:41:07,872 [DEBUG] [STT ar-SA] ~ لديه
+2025-08-28 11:41:08,178 [DEBUG] [STT ar-SA] ~ لديه مشكلة
+2025-08-28 11:41:08,378 [DEBUG] [STT ar-SA] ~ لديه مشكلة في
+2025-08-28 11:41:08,489 [DEBUG] [STT ar-SA] ~ لديه مشكلة في تس
+2025-08-28 11:41:08,790 [DEBUG] [STT ar-SA] ~ لديه مشكلة في تسجيل الدخول
+2025-08-28 11:41:09,103 [DEBUG] [STT ar-SA] ~ لديه مشكلة في تسجيل الدخول لح
+2025-08-28 11:41:09,408 [DEBUG] [STT ar-SA] ~ لديه مشكلة في تسجيل الدخول لحساب
+2025-08-28 11:41:09,804 [DEBUG] [STT ar-SA] ~ لديه مشكلة في تسجيل الدخول لحسابي
+2025-08-28 11:41:10,000 [INFO] [STT ar-SA] ✔ لديه مشكلة في تسجيل الدخول لحسابي.
+2025-08-28 11:41:10,001 [INFO] [STT ar-SA] STOP → 'لديه مشكلة في تسجيل الدخول لحسابي.'
+2025-08-28 11:41:10,208 [INFO] [STT en-US] START at 8.50s
+2025-08-28 11:41:10,213 [DEBUG] Detected en-US from 9.50s to 10.50s
+2025-08-28 11:41:10,216 [DEBUG] Detected en-US from 10.50s to 11.50s
+2025-08-28 11:41:10,218 [DEBUG] Detected ar-SA from 11.50s to 12.50s
+2025-08-28 11:41:11,656 [DEBUG] [STT en-US] ~ can you
+2025-08-28 11:41:11,762 [DEBUG] [STT en-US] ~ can you tell me
+2025-08-28 11:41:11,959 [DEBUG] [STT en-US] ~ can you tell me what the
+2025-08-28 11:41:12,564 [DEBUG] [STT en-US] ~ can you tell me what the error message
+2025-08-28 11:41:12,863 [DEBUG] [STT en-US] ~ can you tell me what the error message you're
+2025-08-28 11:41:12,958 [DEBUG] [STT en-US] ~ can you tell me what the error message you're seeing
+2025-08-28 11:41:13,889 [DEBUG] [STT en-US] ~ can you tell me what the error message you're seeing that ha
+2025-08-28 11:41:13,909 [INFO] [STT en-US] ✔ Can you tell me what the error message you're seeing that HA?
+2025-08-28 11:41:13,911 [INFO] [STT en-US] STOP → 'Can you tell me what the error message you're seeing that HA?'
+2025-08-28 11:41:13,912 [INFO] [STT ar-SA] START at 11.50s
+2025-08-28 11:41:13,916 [DEBUG] Detected ar-SA from 12.50s to 13.50s
+2025-08-28 11:41:13,917 [DEBUG] Detected ar-SA from 13.50s to 14.50s
+2025-08-28 11:41:13,919 [DEBUG] Detected ar-SA from 14.50s to 15.50s
+2025-08-28 11:41:13,919 [DEBUG] Detected en-US from 15.50s to 16.50s
+2025-08-28 11:41:15,378 [DEBUG] [STT ar-SA] ~ تظهر لي
+2025-08-28 11:41:15,800 [DEBUG] [STT ar-SA] ~ تظهر لي رسالة تقول
+2025-08-28 11:41:16,105 [DEBUG] [STT ar-SA] ~ تظهر لي رسالة تقول إن
+2025-08-28 11:41:16,408 [DEBUG] [STT ar-SA] ~ تظهر لي رسالة تقول إن كلمة
+2025-08-28 11:41:16,712 [DEBUG] [STT ar-SA] ~ تظهر لي رسالة تقول إن كلمة المرور
+2025-08-28 11:41:17,040 [DEBUG] [STT ar-SA] ~ تظهر لي رسالة تقول إن كلمة المرور غير
+2025-08-28 11:41:17,456 [DEBUG] [STT ar-SA] ~ تظهر لي رسالة تقول إن كلمة المرور غير صحيحة
+2025-08-28 11:41:18,675 [INFO] [STT ar-SA] ✔ تظهر لي رسالة تقول إن كلمة المرور غير صحيحة.
+2025-08-28 11:41:18,676 [INFO] [STT ar-SA] STOP → 'تظهر لي رسالة تقول إن كلمة المرور غير صحيحة.'
+2025-08-28 11:41:18,678 [INFO] [STT en-US] START at 15.50s
+2025-08-28 11:41:18,683 [DEBUG] Detected en-US from 16.50s to 17.50s
+2025-08-28 11:41:18,683 [DEBUG] Detected en-US from 17.50s to 18.50s
+2025-08-28 11:41:18,686 [DEBUG] Detected ar-SA from 18.50s to 19.50s
+2025-08-28 11:41:20,081 [DEBUG] [STT en-US] ~ let me check
+2025-08-28 11:41:20,177 [DEBUG] [STT en-US] ~ let me check your
+2025-08-28 11:41:20,378 [DEBUG] [STT en-US] ~ let me check your account
+2025-08-28 11:41:20,679 [DEBUG] [STT en-US] ~ let me check your account what's
+2025-08-28 11:41:20,981 [DEBUG] [STT en-US] ~ let me check your account what's your email
+2025-08-28 11:41:21,375 [DEBUG] [STT en-US] ~ let me check your account what's your email address
+2025-08-28 11:41:22,364 [INFO] [STT en-US] ✔ Let me check your account. What's your e-mail address?
+2025-08-28 11:41:22,367 [INFO] [STT en-US] STOP → 'Let me check your account. What's your e-mail address?'
+2025-08-28 11:41:22,369 [INFO] [STT ar-SA] START at 18.50s
+2025-08-28 11:41:22,372 [DEBUG] Detected ar-SA from 19.50s to 20.50s
+2025-08-28 11:41:22,374 [DEBUG] Detected ar-SA from 20.50s to 21.50s
+2025-08-28 11:41:22,376 [DEBUG] Detected en-US from 21.50s to 22.50s
+2025-08-28 11:41:23,991 [DEBUG] [STT ar-SA] ~ آه
+2025-08-28 11:41:24,204 [DEBUG] [STT ar-SA] ~ آه بري
+2025-08-28 11:41:24,299 [DEBUG] [STT ar-SA] ~ آه بريدي
+2025-08-28 11:41:24,503 [DEBUG] [STT ar-SA] ~ آه بريدي الإلكتروني
+2025-08-28 11:41:24,920 [DEBUG] [STT ar-SA] ~ آه بريدي الإلكتروني هو أحمد
+2025-08-28 11:41:26,533 [DEBUG] [STT ar-SA] ~ آه بريدي الإلكتروني هو أحمد وان تو ثري
+2025-08-28 11:41:26,535 [INFO] [STT ar-SA] ✔ آه، بريدي الإلكتروني هو أحمد وان تو ثري.
+2025-08-28 11:41:26,537 [INFO] [STT ar-SA] STOP → 'آه، بريدي الإلكتروني هو أحمد وان تو ثري.'
+2025-08-28 11:41:26,539 [INFO] [STT en-US] START at 21.50s
+2025-08-28 11:41:26,544 [DEBUG] Detected en-US from 22.50s to 23.50s
+2025-08-28 11:41:26,546 [DEBUG] Detected en-US from 23.50s to 24.50s
+2025-08-28 11:41:26,548 [DEBUG] Detected en-US from 24.50s to 25.50s
+2025-08-28 11:41:26,550 [DEBUG] Detected en-US from 25.50s to 26.50s
+2025-08-28 11:41:26,552 [DEBUG] Detected en-US from 26.50s to 27.50s
+2025-08-28 11:41:26,554 [DEBUG] Detected ar-SA from 27.50s to 28.50s
+2025-08-28 11:41:28,920 [DEBUG] [STT en-US] ~ at example
+2025-08-28 11:41:29,215 [DEBUG] [STT en-US] ~ at example dot
+2025-08-28 11:41:29,612 [DEBUG] [STT en-US] ~ at example.com
+2025-08-28 11:41:30,216 [INFO] [STT en-US] ✔ At example.com.
+2025-08-28 11:41:31,311 [DEBUG] [STT en-US] ~ thanks one
+2025-08-28 11:41:31,714 [DEBUG] [STT en-US] ~ thanks 1 moment
+2025-08-28 11:41:32,015 [DEBUG] [STT en-US] ~ thanks one moment while
+2025-08-28 11:41:32,314 [DEBUG] [STT en-US] ~ thanks one moment while looking to
+2025-08-28 11:41:32,615 [DEBUG] [STT en-US] ~ thanks one moment while looking to it
+2025-08-28 11:41:33,311 [INFO] [STT en-US] ✔ Thanks one moment while I look into it.
+2025-08-28 11:41:33,312 [INFO] [STT en-US] STOP → 'At example.com. Thanks one moment while I look into it.'
+2025-08-28 11:41:33,314 [INFO] [STT ar-SA] START at 27.50s
+2025-08-28 11:41:33,319 [DEBUG] Detected en-US from 28.50s to 29.50s
+2025-08-28 11:41:34,905 [DEBUG] [STT ar-SA] ~ حسنا شكرا لك
+2025-08-28 11:41:34,916 [INFO] [STT ar-SA] ✔ حسنا، شكرا لك.
+2025-08-28 11:41:34,919 [INFO] [STT ar-SA] STOP → 'حسنا، شكرا لك.'
+2025-08-28 11:41:34,921 [INFO] [STT en-US] START at 28.50s
+2025-08-28 11:41:34,926 [DEBUG] Detected en-US from 29.50s to 30.50s
+2025-08-28 11:41:34,928 [DEBUG] Detected en-US from 30.50s to 31.50s
+2025-08-28 11:41:34,930 [DEBUG] Detected en-US from 31.50s to 32.50s
+2025-08-28 11:41:34,933 [DEBUG] Detected en-US from 32.50s to 33.50s
+2025-08-28 11:41:34,936 [DEBUG] Detected ar-SA from 33.50s to 34.50s
+2025-08-28 11:41:37,000 [DEBUG] [STT en-US] ~ look
+2025-08-28 11:41:37,207 [DEBUG] [STT en-US] ~ look i've
+2025-08-28 11:41:37,605 [DEBUG] [STT en-US] ~ look i've reset your
+2025-08-28 11:41:37,999 [DEBUG] [STT en-US] ~ look i've reset your password
+2025-08-28 11:41:38,302 [DEBUG] [STT en-US] ~ look i've reset your password you'll get
+2025-08-28 11:41:38,600 [DEBUG] [STT en-US] ~ look i've reset your password you'll get an email
+2025-08-28 11:41:38,902 [DEBUG] [STT en-US] ~ look i've reset your password you'll get an email shortly
+2025-08-28 11:41:39,200 [DEBUG] [STT en-US] ~ look i've reset your password you'll get an email shortly with
+2025-08-28 11:41:39,602 [DEBUG] [STT en-US] ~ look i've reset your password you'll get an email shortly with the instructions
+2025-08-28 11:41:40,604 [DEBUG] [STT en-US] ~ look i've reset your password you'll get an email shortly with the instructions moment
+2025-08-28 11:41:40,644 [INFO] [STT en-US] ✔ Look, I've reset your password. You'll get an e-mail shortly with the instructions moment.
+2025-08-28 11:41:40,645 [INFO] [STT en-US] STOP → 'Look, I've reset your password. You'll get an e-mail shortly with the instructions moment.'
+2025-08-28 11:41:40,647 [INFO] [STT ar-SA] START at 33.50s
+2025-08-28 11:41:40,652 [DEBUG] Detected ar-SA from 34.50s to 35.50s
+2025-08-28 11:41:40,654 [DEBUG] Detected ar-SA from 35.50s to 36.50s
+2025-08-28 11:41:40,656 [DEBUG] Detected en-US from 36.50s to 37.50s
+2025-08-28 11:41:42,244 [DEBUG] [STT ar-SA] ~ ممتاز
+2025-08-28 11:41:42,849 [DEBUG] [STT ar-SA] ~ ممتاز شكرا
+2025-08-28 11:41:43,784 [DEBUG] [STT ar-SA] ~ ممتاز شكرا جزيلا
+2025-08-28 11:41:44,344 [INFO] [STT ar-SA] ✔ ممتاز، شكرا جزيلا.
+2025-08-28 11:41:44,347 [INFO] [STT ar-SA] STOP → 'ممتاز، شكرا جزيلا.'
+2025-08-28 11:41:44,348 [INFO] [STT en-US] START at 36.50s
+2025-08-28 11:41:44,352 [DEBUG] Detected en-US from 37.50s to 38.50s
+2025-08-28 11:41:44,354 [DEBUG] Detected ar-SA from 38.50s to 39.50s
+2025-08-28 11:41:45,892 [DEBUG] [STT en-US] ~ let us know if
+2025-08-28 11:41:46,093 [DEBUG] [STT en-US] ~ let us know if you need
+2025-08-28 11:41:46,391 [DEBUG] [STT en-US] ~ let us know if you need anything else
+2025-08-28 11:41:46,955 [INFO] [STT en-US] ✔ Let us know if you need anything else.
+2025-08-28 11:41:46,958 [INFO] [STT en-US] STOP → 'Let us know if you need anything else.'
+2025-08-28 11:41:46,959 [INFO] [STT ar-SA] START at 38.50s
+2025-08-28 11:41:46,964 [DEBUG] Detected ar-SA from 39.50s to 40.50s
+2025-08-28 11:41:46,965 [DEBUG] Detected ar-SA from 40.50s to 41.85s
+2025-08-28 11:41:46,968 [DEBUG] LID session stopped
+2025-08-28 11:41:48,526 [DEBUG] [STT ar-SA] ~ أكيد
+2025-08-28 11:41:48,831 [DEBUG] [STT ar-SA] ~ أكيد شكرا
+2025-08-28 11:41:49,139 [DEBUG] [STT ar-SA] ~ أكيد شكرا مرة ثانيه
+2025-08-28 11:41:50,433 [INFO] [STT ar-SA] ✔ أكيد، شكرا مرة ثانيه.
+2025-08-28 11:41:54,198 [WARNING] LID timeout after 60.0s — stopping.
+2025-08-28 11:41:56,969 [DEBUG] LID session stopped
+2025-08-28 11:41:57,402 [INFO] [STT ar-SA] STOP → 'أكيد، شكرا مرة ثانيه.'
+2025-08-28 11:41:57,404 [INFO] Wrote 12 language segments to fixed_module_segments.json
+2025-08-28 11:41:57,407 [INFO] Wrote complete transcript to fixed_module_transcript.json
+2025-08-28 11:41:57,407 [INFO] Full transcript: [en-US] Hello, thank you for calling. How can I help you today? What happened? [ar-SA] لديه مشكلة في تسجيل الدخول لحسابي. [en-US] Can you tell me what the error message you're seeing that HA? [ar-SA] تظهر لي رسالة تقول إن كلمة المرور غير صحيحة. [en-US] Let me check your account. What's your e-mail address? [ar-SA] آه، بريدي الإلكتروني هو أحمد وان تو ثري. [en-US] At example.com. Thanks one moment while I look into it. [ar-SA] حسنا، شكرا لك. [en-US] Look, I've reset your password. You'll get an e-mail shortly with the instructions moment. [ar-SA] ممتاز، شكرا جزيلا. [en-US] Let us know if you need anything else. [ar-SA] أكيد، شكرا مرة ثانيه.

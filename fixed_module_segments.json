@@ -1,0 +1,78 @@
+{
+  "AudioFile": "audio\\samples\\Arabic_english_mix_optimized.wav",
+  "SegmentCount": 12,
+  "Segments": [
+    {
+      "Language": "en-US",
+      "StartTimeHns": 0,
+      "DurationHns": 54990000,
+      "IsSkipped": false
+    },
+    {
+      "Language": "ar-SA",
+      "StartTimeHns": 54990000,
+      "DurationHns": 30000000,
+      "IsSkipped": false
+    },
+    {
+      "Language": "en-US",
+      "StartTimeHns": 84990000,
+      "DurationHns": 30000000,
+      "IsSkipped": false
+    },
+    {
+      "Language": "ar-SA",
+      "StartTimeHns": 114990000,
+      "DurationHns": 40000000,
+      "IsSkipped": false
+    },
+    {
+      "Language": "en-US",
+      "StartTimeHns": 154990000,
+      "DurationHns": 30010000,
+      "IsSkipped": false
+    },
+    {
+      "Language": "ar-SA",
+      "StartTimeHns": 185000000,
+      "DurationHns": 30000000,
+      "IsSkipped": false
+    },
+    {
+      "Language": "en-US",
+      "StartTimeHns": 215000000,
+      "DurationHns": 60000000,
+      "IsSkipped": false
+    },
+    {
+      "Language": "ar-SA",
+      "StartTimeHns": 275000000,
+      "DurationHns": 10000000,
+      "IsSkipped": false
+    },
+    {
+      "Language": "en-US",
+      "StartTimeHns": 285000000,
+      "DurationHns": 50000000,
+      "IsSkipped": false
+    },
+    {
+      "Language": "ar-SA",
+      "StartTimeHns": 335000000,
+      "DurationHns": 30000000,
+      "IsSkipped": false
+    },
+    {
+      "Language": "en-US",
+      "StartTimeHns": 365000000,
+      "DurationHns": 20000000,
+      "IsSkipped": false
+    },
+    {
+      "Language": "ar-SA",
+      "StartTimeHns": 385000000,
+      "DurationHns": 33500000,
+      "IsSkipped": false
+    }
+  ]
+}

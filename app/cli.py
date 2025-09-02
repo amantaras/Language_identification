@@ -94,7 +94,20 @@ def transcribe(audio, segments, lang_map, key, billing, out):
     required=True,
     help="Candidate languages (avoid multiple locales per base language).",
 )
-@click.option("--lid-host", required=True)
+@click.option(
+    "--speech-host",
+    required=False,
+    default="http://localhost:5000",
+    show_default=True,
+    help="http:// host:port of Speech (STT) container",
+)
+@click.option(
+    "--lid-host",
+    required=False,
+    default="http://localhost:5003",
+    show_default=True,
+    help="http:///ws:// host:port of Language ID container",
+)
 @click.option(
     "--map",
     "lang_map",
@@ -120,6 +133,7 @@ def transcribe(audio, segments, lang_map, key, billing, out):
 def full(
     audio,
     languages,
+    speech_host,
     lid_host,
     lang_map,
     key,
@@ -143,7 +157,7 @@ def full(
         seg_path = os.path.join(td, "segments.json")
         detect_languages(
             audio_file=audio,
-            lid_host=lid_host,
+            lid_host=speech_host,
             languages=list(languages),
             out_segments=seg_path,
             timeout_sec=timeout_sec,
