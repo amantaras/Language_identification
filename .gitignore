@@ -74,7 +74,7 @@ __snapshot__/
 !/.env.example
 
 # Audio / large sample artifacts (adjust if you want them tracked)
-*.wav
+!*.wav
 *.mp3
 *.flac
 
