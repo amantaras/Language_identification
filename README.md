@@ -1,94 +1,164 @@
-# Language Switch Aware Transcription
+# Live Language Switch Aware Transcription (Container LID + Cloud STT)
 
-This project provides a reference implementation for processing an audio file / stream, detecting language changes (code-switching), and routing audio segments to different Azure Speech-to-Text container endpoints for transcription.
+Modern pipeline for mixed‑language audio where we want:
+
+* Real‑time (single pass) continuous Language Identification (LID) from a local Azure Speech container.
+* Immediate handoff to Azure Speech **cloud** STT (SDK) for the currently active language – switching recognizers on the fly when LID changes.
+* Fine‑grained logging of partial (~) and final (✔) hypotheses while running.
+* Automatic segment merging + optional incremental flushing of results to disk.
+
+Implemented in `disconnected_language_detector.py` (name will likely be shortened later but kept for clarity in commits).
+
+> Previous README described a two‑pass “detect then slice then per‑language container STT” flow. The current default is a **live streaming** single pass: container only for LID; cloud for recognition.
+
+## High‑Level Architecture
+
+1. **LID Container (WebSocket)** – You run only the Language Detection container locally (`--lid-host`, default `ws://localhost:5003`). We connect using `speechsdk.SpeechConfig(host=...)` (HOST ONLY, no `/speech/` path).
+2. **LID Event Stream** – Each recognized event includes an offset + duration + detected language. We accumulate language spans.
+3. **Live Cloud STT Stream** – On first language detection we start a cloud SpeechRecognizer (PushAudioInputStream). Raw audio is fed chunk by chunk. When LID signals a language switch we gracefully stop the current recognizer, store its transcript, then spin up a new recognizer for the new language and continue feeding audio from that moment onward (with a tail overlap to avoid boundary loss).
+4. **Merging & Output** – Finalized per‑language blocks become “segments”. A consolidated transcript plus raw segment metadata is persisted to JSON (`--output`). LID merged segments (audit) are also written to `--segments`.
 
 ## Key Features
-- Continuous multi-language identification using Azure Speech Language Detection container.
-- Segment timeline construction (start/end offsets in HNS and seconds).
-- Per-language buffering of audio samples for precise segment extraction.
-- Dynamic transcription routing: each supported language maps to its own Azure Speech STT container endpoint (host + key).
-- Unified output combining all hypotheses with timestamps and language tags.
 
-## Quick Start
+* Continuous multi‑language LID via container.
+* Dynamic runtime STT switching (no second pass slicing required).
+* Overlap tail padding (`--tail-overlap-ms`) to reduce word truncation at switches.
+* Adjustable push chunk size (`--chunk-ms`).
+* Optional incremental flushing after each language stop (`--flush-after-stop`).
+* `.env` autoload (values are only applied if not already present as real env vars).
+* Robust cancellation/diagnostic logging on errors.
 
-### 1. Clone & Install
+## Environment Variables (Cloud STT)
+
+One of the following sets must be present for cloud STT:
+
+| Variable | Purpose |
+|----------|---------|
+| `SPEECH_KEY` or `AZURE_SPEECH_KEY` | Speech resource key (required) |
+| (`SPEECH_REGION` or `AZURE_SPEECH_REGION`) | Region (use if endpoint not supplied) |
+| OR `SPEECH_ENDPOINT` / `AZURE_SPEECH_ENDPOINT` | Full HTTPS/WSS endpoint (if used, must contain `/speech/` path; we auto‑append if missing) |
+
+The script loads a local `.env` automatically at startup (lines with `KEY=VALUE`, ignoring comments) but does not overwrite already‑exported env vars.
+
+Minimal `.env` example:
+```
+AZURE_SPEECH_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+AZURE_SPEECH_REGION=eastus2
+LID_PORT=5003
+```
+
+If you prefer endpoint mode (sometimes needed for network routing):
+```
+AZURE_SPEECH_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+AZURE_SPEECH_ENDPOINT=https://eastus2.stt.speech.microsoft.com/speech/recognition/conversation/cognitiveservices/v1
+```
+
+## Installation
+
 ```pwsh
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
+./.venv/Scripts/Activate.ps1
 pip install --upgrade pip
 pip install -e .
 ```
 
-### 2. Prepare `.env`
-Copy `.env.example` to `.env` and fill in:
-```
-SPEECH_BILLING_ENDPOINT=https://<your-speech-resource>.cognitiveservices.azure.com/
-SPEECH_API_KEY=<your-key>
-# (Optionally adjust ports/locales)
-```
+> `azure-cognitiveservices-speech` is specified in `requirements.txt`.
 
-### 3. Run Containers (PowerShell script)
+## Run the LID Container
+
+You only need the LID container for this live mode. (STT containers are not required unless you use hybrid scripts.)
+
+PowerShell helper (if you kept the original scripts) – adjust image tag if needed:
 ```pwsh
-./scripts/run-containers.ps1 -EnvFile ./.env
-# (Add -Interactive to stream logs, -ForceRecreate to remove existing)
+./scripts/run-containers.ps1 -EnvFile ./.env -OnlyLid
 ```
-This starts:
-- Language Identification on `LID_PORT` (default 5003)
-- English STT on `EN_PORT` (default 5004)
-- Arabic STT on `AR_PORT` (default 5005)
+If `-OnlyLid` isn’t implemented, just start the language detection container manually mapping `LID_PORT`.
 
-Stop containers:
+Stop when done:
 ```pwsh
 ./scripts/stop-containers.ps1
 ```
 
-### 4. Run Detection + Transcription
+## Usage (Live LID + Cloud STT)
+
 ```pwsh
-lang-switch-stt full --audio enar.wav `
-  --languages en-US --languages ar-SA `
+python disconnected_language_detector.py `
+  --audio "audio\samples\Arabic_english_mix_optimized.wav" `
+  --languages en-US ar-SA `
   --lid-host ws://localhost:5003 `
-  --map en-US=ws://localhost:5004 --map ar-SA=ws://localhost:5005 `
-  --key $env:SPEECH_API_KEY --billing $env:SPEECH_BILLING_ENDPOINT `
-  --min-segment-sec 0.4 `
-  --timeout-sec 120 `
-  --verbose `
-  --out transcript.json
+  --segments live_segments.json `
+  --output live_transcript.json `
+  --timeout-sec 60 `
+  --tail-overlap-ms 200 `
+  --chunk-ms 40 `
+  --flush-after-stop `
+  --verbose
 ```
 
-## Architecture Overview
-1. **Language Detection Pass**: Uses container endpoint to receive recognized events with offsets + detected language.
-2. **Segmentation Engine**: Builds segments when language changes.
-3. **Audio Slicing**: Loads original audio, slices by offsets.
-4. **Per-Language Transcription**: Each segment routed to its locale-specific STT container.
-5. **Merge**: Output JSON with ordered segments.
+### Important Flags
+| Flag | Meaning |
+|------|---------|
+| `--lid-host` | WebSocket host:port of LID container (NO path). If you enter `localhost:5003` we add `ws://`. |
+| `--languages` | Candidate language codes for detection (BCP‑47). |
+| `--timeout-sec` | Hard stop for LID phase (wall clock). 0 disables timeout. |
+| `--min-segment-sec` | Only used for logging/flagging short spans; live mode still streams immediately. |
+| `--chunk-ms` | Milliseconds per push chunk to cloud STT. Lower = more responsive; higher = fewer calls. |
+| `--tail-overlap-ms` | Extra audio included after a detected end before stopping recognizer (reduces word clipping). |
+| `--flush-after-stop` | Write `--output` after each language block completes (incremental). |
+| `--verbose` | Debug logging (partials, detection events, internal timings). |
 
-## Output Format
-`transcript.json`:
+## Output Files
+
+* `--segments` (e.g. `live_segments.json`): merged LID segments (audit reference). Structure:
 ```json
 {
-  "audio": "enar.wav",
-  "segments": [
-    {"id": 0, "language": "en-US", "start_sec": 0.00, "end_sec": 3.21, "text": "Hello ..."},
-    {"id": 1, "language": "ar-SA", "start_sec": 3.21, "end_sec": 6.88, "text": "مرحبا ..."}
+  "AudioFile": "audio\\samples\\Arabic_english_mix_optimized.wav",
+  "SegmentCount": 5,
+  "Segments": [
+    {"Language": "en-US", "StartTimeHns": 0, "DurationHns": 55000000, "IsSkipped": false},
+    {"Language": "ar-SA", "StartTimeHns": 55000000, "DurationHns": 30000000, "IsSkipped": false}
   ]
 }
 ```
 
-## Scripts
-- `scripts/run-containers.ps1`: Launch all required containers using `.env` values.
-- `scripts/stop-containers.ps1`: Stop/remove the containers.
+* `--output` (e.g. `live_transcript.json`):
+```json
+{
+  "audio_file": "...",
+  "segment_count": 2,
+  "segments": [
+    {"Language": "en-US", "StartTimeHns": 0, "DurationHns": 55000000, "IsSkipped": false},
+    {"Language": "ar-SA", "StartTimeHns": 55000000, "DurationHns": 30000000, "IsSkipped": false}
+  ],
+  "recognized_results": [
+    {"language": "en-US", "start_hns": 0, "end_hns": 55000000, "transcript": "Hello ..."},
+    {"language": "ar-SA", "start_hns": 55000000, "end_hns": 85000000, "transcript": "مرحبا ..."}
+  ],
+  "full_transcript": "[en-US] Hello ... [ar-SA] مرحبا ..."
+}
+```
 
-## Advanced Options
-CLI flags added for robustness:
-- `--timeout-sec`: Abort detection if it exceeds this wall-clock time.
-- `--min-segment-sec`: Drop very short language blips below this duration.
-- `--verbose`: Enable debug logging (prints segment start/end and language switches).
+## Troubleshooting
 
-## Next Enhancements
-- Confidence / threshold based switching.
-- Real-time streaming (single pass) pipeline.
-- Parallel transcription.
-- Silence-aware segmentation.
+| Symptom | Likely Cause | Fix |
+|---------|--------------|-----|
+| Every segment shows `Canceled` | Bad key / region mismatch / network block | Verify key & region; attempt region mode instead of endpoint; test with `simple_cloud_test.py`. |
+| No detection events | Wrong `--lid-host` or container not running | Confirm container logs; ensure no path appended; correct port. |
+| Truncated words at switch | Overlap too small | Increase `--tail-overlap-ms` (e.g. 400). |
+| Latency too high | Chunk too large | Reduce `--chunk-ms` (e.g. 20–30). |
+
+## Related / Legacy Scripts
+
+* `hybrid_transcribe.py` – offline segmented pass (and hybrid cloud/container support) if you need deterministic slice-based transcription.
+* `fixed_transcribe_with_language.py` – earlier two‑phase version kept for comparison.
+* `simple_cloud_test.py` – minimal single recognition sanity check (full file, one language) to isolate cloud issues.
+
+## Roadmap / Ideas
+* Optional fallback to container STT for air‑gapped scenarios.
+* Confidence gating / smoothing for rapid code switches.
+* Real‑time websocket output (JSON events) for UI integration.
+* Speaker diarization integration layer.
 
 ## License
-MIT (adjust as needed)
+MIT (adjust as needed).
+
