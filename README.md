@@ -1,5 +1,49 @@
 # Live Language Switch Aware Transcription (Container LID + Cloud STT)
 
+## Quick Run Example (PowerShell)
+
+The fastest way to try the live pipeline once your LID container is running and your Speech cloud key/region are in the environment (or `.env`) is:
+
+```pwsh
+python disconnected_language_detector.py `
+  --audio "audio\samples\Arabic_english_mix_optimized.wav" `
+  --languages en-US ar-SA `
+  --lid-host ws://localhost:5003 `
+  --segments fixed_module_segments.json `
+  --output fixed_module_transcript.json `
+  --force-detection `
+  --verbose
+```
+
+### Parameter Breakdown
+
+| Flag | Required | Example | Purpose |
+|------|----------|---------|---------|
+| `--audio` | Yes | `audio\samples\Arabic_english_mix_optimized.wav` | Path to a WAV (16 kHz not required; script resamples). Full or relative path accepted. |
+| `--languages` | Yes (>=1) | `en-US ar-SA` | Candidate languages for LID. Order does not matter. Provide valid BCP‑47 codes. Detection will only choose among these. |
+| `--lid-host` | No (default `ws://localhost:5003`) | `ws://localhost:5003` | WebSocket host:port for the Language Detection container. Supply host:port; if you omit `ws://` it is added. Must NOT include `/speech/` path. |
+| `--segments` | No | `fixed_module_segments.json` | Where merged LID segments (audit reference) are written at the end. You can choose any filename. |
+| `--output` | No | `fixed_module_transcript.json` | Final transcript JSON (recognized_results + full_transcript). Overwritten each run (and also after each language block if `--flush-after-stop` is used). |
+| `--force-detection` | Optional (legacy) | (present) | Kept for backward compatibility with older scripts; live mode always performs LID so this flag currently has no effect. Safe to include or omit. |
+| `--verbose` | Optional | (present) | Enables debug logging: partial hypotheses, raw detection spans, internal timing. Omit for quieter logs. |
+
+Additional useful live‑mode flags (not shown above):
+
+| Flag | Default | Why adjust? |
+|------|---------|-------------|
+| `--timeout-sec` | 60 | Maximum wall‑clock time to wait for LID completion (stop earlier if audio shorter). Set 0 to disable. |
+| `--chunk-ms` | 40 | Audio push size to cloud STT. Smaller = lower latency, more calls. Larger = fewer calls, potentially higher latency. Typical 20–60. |
+| `--tail-overlap-ms` | 200 | Extra audio pushed after a detected language end before stopping recognizer to avoid cutting trailing phonemes. Increase (e.g. 300–400) if you see clipped last words. |
+| `--flush-after-stop` | (off) | Write `--output` incrementally after each language block; useful for very long files / monitoring progress. |
+
+Environment expectations (choose one mode):
+* Region mode: `SPEECH_KEY` + `SPEECH_REGION` (or `AZURE_SPEECH_KEY` / `AZURE_SPEECH_REGION`).
+* Endpoint mode: `SPEECH_KEY` + full `SPEECH_ENDPOINT` containing `/speech/` path (auto‑appended if missing).
+
+If these are in `.env`, the script auto‑loads them unless already present in the real environment.
+
+---
+
 Modern pipeline for mixed‑language audio where we want:
 
 * Real‑time (single pass) continuous Language Identification (LID) from a local Azure Speech container.
