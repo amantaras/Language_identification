@@ -71,7 +71,8 @@ __snapshot__/
 # Environment & secrets
 .env
 .env.*
-!/.env.example
+!.env.example
+!.env.sample
 
 # Audio / large sample artifacts (adjust if you want them tracked)
 !*.wav
