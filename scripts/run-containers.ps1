@@ -100,11 +100,13 @@ if ($ForceRecreate) {
 }
 
 Write-Host "Starting Language Identification (host $lidPort -> 5000)" -ForegroundColor Green
-Write-Host "Debug: lidImg='$lidImg'" -ForegroundColor Yellow
 $lidImageRef = $lidImg.Trim()
-Write-Host "Debug: lidImageRef='$lidImageRef'" -ForegroundColor Yellow
-if (-not ($lidImageRef -match ':[^/]+$')) { $lidImageRef = "$lidImageRef:latest" }
-Write-Host "Debug: lidImageRef after regex='$lidImageRef'" -ForegroundColor Yellow
+# Add :latest tag if not present (check if there's a : after the last /)
+$lastSlash = $lidImageRef.LastIndexOf('/')
+if ($lidImageRef.IndexOf(':', [Math]::Max(0, $lastSlash)) -le $lastSlash) {
+    $lidImageRef = $lidImageRef + ':latest'
+}
+Write-Host "  Image: $lidImageRef" -ForegroundColor DarkGray
 
 $lidCmd = "docker run -d --name $lidName -p $lidPort`:5000 --memory $lidMem --cpus $lidCpu -e Eula=accept -e Billing=$billing -e ApiKey=$key $lidImageRef"
 if ($Interactive) {
@@ -115,7 +117,12 @@ Invoke-Expression $lidCmd
 
 Write-Host "Starting EN STT ($enLoc host $enPort -> 5000)" -ForegroundColor Green
 $sttImageRef = $sttImg.Trim()
-if (-not ($sttImageRef -match ':[^/]+$')) { $sttImageRef = "$sttImageRef:latest" }
+# Add :latest tag if not present
+$lastSlash = $sttImageRef.LastIndexOf('/')
+if ($sttImageRef.IndexOf(':', [Math]::Max(0, $lastSlash)) -le $lastSlash) {
+    $sttImageRef = $sttImageRef + ':latest'
+}
+Write-Host "  Image: $sttImageRef" -ForegroundColor DarkGray
 
 $enCmd = "docker run -d --name $enName -p $enPort`:5000 --memory $sttMem --cpus $sttCpu -e Eula=accept -e Billing=$billing -e ApiKey=$key -e SpeechServiceConnection_Locale=$enLoc $sttImageRef"
 if ($Interactive) {

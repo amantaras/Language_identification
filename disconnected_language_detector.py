@@ -155,8 +155,8 @@ class LIDStream:
         on_segment: callable,
         on_done: callable,
     ):
-        if not lid_host.startswith(("ws://", "wss://")):
-            lid_host = "ws://" + lid_host
+        if not lid_host.startswith(("ws://", "wss://", "http://", "https://")):
+            lid_host = "http://" + lid_host
         self.audio_file = audio_file
         self.languages = [canon_lang(l) for l in languages]
         self.lid_host = lid_host
@@ -715,8 +715,8 @@ def main():
     )
     parser.add_argument(
         "--lid-host",
-        default="ws://localhost:5003",
-        help="LID container host (ws://host:port, NO path)",
+        default="http://localhost:5000",
+        help="LID container host (http://host:port, NO path)",
     )
     parser.add_argument(
         "--segments",

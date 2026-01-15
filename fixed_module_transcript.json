@@ -80,150 +80,86 @@
       "language": "en-US",
       "start_hns": 0,
       "end_hns": 56990000,
-      "transcript": "Hello, thank you for calling. How can I help you today? What happened?",
-      "finals": [
-        {
-          "t": 1756366866.2940829,
-          "text": "Hello, thank you for calling. How can I help you today? What happened?"
-        }
-      ]
+      "transcript": "",
+      "finals": []
     },
     {
       "language": "ar-SA",
       "start_hns": 54990000,
       "end_hns": 86990000,
-      "transcript": "لديه مشكلة في تسجيل الدخول لحسابي.",
-      "finals": [
-        {
-          "t": 1756366870.0004084,
-          "text": "لديه مشكلة في تسجيل الدخول لحسابي."
-        }
-      ]
+      "transcript": "",
+      "finals": []
     },
     {
       "language": "en-US",
       "start_hns": 84990000,
       "end_hns": 116990000,
-      "transcript": "Can you tell me what the error message you're seeing that HA?",
-      "finals": [
-        {
-          "t": 1756366873.9095979,
-          "text": "Can you tell me what the error message you're seeing that HA?"
-        }
-      ]
+      "transcript": "",
+      "finals": []
     },
     {
       "language": "ar-SA",
       "start_hns": 114990000,
       "end_hns": 156990000,
-      "transcript": "تظهر لي رسالة تقول إن كلمة المرور غير صحيحة.",
-      "finals": [
-        {
-          "t": 1756366878.6741073,
-          "text": "تظهر لي رسالة تقول إن كلمة المرور غير صحيحة."
-        }
-      ]
+      "transcript": "",
+      "finals": []
     },
     {
       "language": "en-US",
       "start_hns": 154990000,
       "end_hns": 187000000,
-      "transcript": "Let me check your account. What's your e-mail address?",
-      "finals": [
-        {
-          "t": 1756366882.3649461,
-          "text": "Let me check your account. What's your e-mail address?"
-        }
-      ]
+      "transcript": "",
+      "finals": []
     },
     {
       "language": "ar-SA",
       "start_hns": 185000000,
       "end_hns": 217000000,
-      "transcript": "آه، بريدي الإلكتروني هو أحمد وان تو ثري.",
-      "finals": [
-        {
-          "t": 1756366886.5347302,
-          "text": "آه، بريدي الإلكتروني هو أحمد وان تو ثري."
-        }
-      ]
+      "transcript": "",
+      "finals": []
     },
     {
       "language": "en-US",
       "start_hns": 215000000,
       "end_hns": 277000000,
-      "transcript": "At example.com. Thanks one moment while I look into it.",
-      "finals": [
-        {
-          "t": 1756366890.216233,
-          "text": "At example.com."
-        },
-        {
-          "t": 1756366893.3112233,
-          "text": "Thanks one moment while I look into it."
-        }
-      ]
+      "transcript": "",
+      "finals": []
     },
     {
       "language": "ar-SA",
       "start_hns": 275000000,
       "end_hns": 287000000,
-      "transcript": "حسنا، شكرا لك.",
-      "finals": [
-        {
-          "t": 1756366894.9160602,
-          "text": "حسنا، شكرا لك."
-        }
-      ]
+      "transcript": "",
+      "finals": []
     },
     {
       "language": "en-US",
       "start_hns": 285000000,
       "end_hns": 337000000,
-      "transcript": "Look, I've reset your password. You'll get an e-mail shortly with the instructions moment.",
-      "finals": [
-        {
-          "t": 1756366900.644248,
-          "text": "Look, I've reset your password. You'll get an e-mail shortly with the instructions moment."
-        }
-      ]
+      "transcript": "",
+      "finals": []
     },
     {
       "language": "ar-SA",
       "start_hns": 335000000,
       "end_hns": 367000000,
-      "transcript": "ممتاز، شكرا جزيلا.",
-      "finals": [
-        {
-          "t": 1756366904.3448973,
-          "text": "ممتاز، شكرا جزيلا."
-        }
-      ]
+      "transcript": "",
+      "finals": []
     },
     {
       "language": "en-US",
       "start_hns": 365000000,
       "end_hns": 387000000,
-      "transcript": "Let us know if you need anything else.",
-      "finals": [
-        {
-          "t": 1756366906.9557924,
-          "text": "Let us know if you need anything else."
-        }
-      ]
+      "transcript": "",
+      "finals": []
     },
     {
       "language": "ar-SA",
       "start_hns": 385000000,
       "end_hns": 420500000,
-      "transcript": "أكيد، شكرا مرة ثانيه.",
-      "finals": [
-        {
-          "t": 1756366910.433861,
-          "text": "أكيد، شكرا مرة ثانيه."
-        }
-      ]
+      "transcript": "",
+      "finals": []
     }
   ],
-  "full_transcript": "[en-US] Hello, thank you for calling. How can I help you today? What happened? [ar-SA] لديه مشكلة في تسجيل الدخول لحسابي. [en-US] Can you tell me what the error message you're seeing that HA? [ar-SA] تظهر لي رسالة تقول إن كلمة المرور غير صحيحة. [en-US] Let me check your account. What's your e-mail address? [ar-SA] آه، بريدي الإلكتروني هو أحمد وان تو ثري. [en-US] At example.com. Thanks one moment while I look into it. [ar-SA] حسنا، شكرا لك. [en-US] Look, I've reset your password. You'll get an e-mail shortly with the instructions moment. [ar-SA] ممتاز، شكرا جزيلا. [en-US] Let us know if you need anything else. [ar-SA] أكيد، شكرا مرة ثانيه."
+  "full_transcript": ""
 }
