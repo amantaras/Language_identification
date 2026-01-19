@@ -155,8 +155,14 @@ class LIDStream:
         on_segment: callable,
         on_done: callable,
     ):
+        # Determine protocol from environment or default to http
+        lid_protocol = os.getenv("LID_PROTOCOL", "http").strip().lower()
         if not lid_host.startswith(("ws://", "wss://", "http://", "https://")):
-            lid_host = "http://" + lid_host
+            if lid_protocol in ("ws", "websocket", "wss"):
+                lid_host = "ws://" + lid_host
+            else:
+                lid_host = "http://" + lid_host
+        log.info(f"LID protocol: {lid_protocol}, host: {lid_host}")
         self.audio_file = audio_file
         self.languages = [canon_lang(l) for l in languages]
         self.lid_host = lid_host

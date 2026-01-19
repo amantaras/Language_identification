@@ -108,6 +108,113 @@ pip install -e .
 
 > `azure-cognitiveservices-speech` is specified in `requirements.txt`.
 
+## Testing the Solution
+
+### Prerequisites
+
+1. **Docker** installed and running
+2. **Azure Speech resource** with valid credentials
+3. **Python virtual environment** activated
+
+### Step 1: Configure Environment Variables
+
+Copy `.env.sample` to `.env` and fill in your credentials:
+
+```env
+# Container billing (required for LID container)
+SPEECH_BILLING_ENDPOINT=https://YOUR-RESOURCE.cognitiveservices.azure.com
+SPEECH_API_KEY=your_container_api_key
+
+# Cloud STT credentials (required for transcription)
+AZURE_SPEECH_KEY=your_cloud_speech_key
+AZURE_SPEECH_REGION=eastus2
+
+# LID protocol: ws (WebSocket) or http
+LID_PROTOCOL=ws
+
+# Container ports
+LID_PORT=5003
+```
+
+> **Important**: The LID container listens on port 5003 internally. Use port mapping `5003:5003`.
+
+### Step 2: Start the LID Container
+
+```pwsh
+# Remove any existing containers
+docker rm -f speech-lid
+
+# Start with correct port mapping (5003:5003, NOT 5003:5000)
+docker run -d --name speech-lid -p 5003:5003 --memory 1g --cpus 1 `
+  -e Eula=accept `
+  -e Billing=https://YOUR-RESOURCE.cognitiveservices.azure.com `
+  -e ApiKey=your_api_key `
+  mcr.microsoft.com/azure-cognitive-services/speechservices/language-detection:latest
+
+# Wait ~15 seconds for initialization
+Start-Sleep -Seconds 15
+
+# Verify container is running
+docker ps
+docker logs speech-lid --tail 20
+```
+
+### Step 3: Test Cloud STT Credentials
+
+Before running the full solution, verify your cloud credentials work:
+
+```pwsh
+python -c "
+import azure.cognitiveservices.speech as speechsdk
+key = 'YOUR_AZURE_SPEECH_KEY'
+region = 'YOUR_REGION'
+speech_config = speechsdk.SpeechConfig(subscription=key, region=region)
+speech_config.speech_recognition_language = 'en-US'
+audio_config = speechsdk.audio.AudioConfig(filename='audio/samples/Arabic_english_mix_optimized.wav')
+recognizer = speechsdk.SpeechRecognizer(speech_config=speech_config, audio_config=audio_config)
+result = recognizer.recognize_once()
+print(f'Result: {result.reason}')
+print(f'Text: {result.text}')
+"
+```
+
+If you see `ResultReason.Canceled` with 401 error, check your key and region.
+
+### Step 4: Run the Language Detection + Transcription
+
+```pwsh
+python disconnected_language_detector.py `
+  --audio "audio\samples\Arabic_english_mix_optimized.wav" `
+  --languages en-US ar-SA `
+  --lid-host localhost:5003 `
+  --segments test_segments.json `
+  --output test_transcript.json `
+  --verbose
+```
+
+### Expected Output
+
+- **LID working**: You should see `Detected en-US from X.XXs to Y.YYs` messages
+- **STT working**: You should see `[STT en-US] ✔ transcribed text` messages
+- **Output files**: `test_segments.json` and `test_transcript.json`
+
+### Troubleshooting
+
+| Issue | Cause | Solution |
+|-------|-------|----------|
+| `0 language segments` | Wrong port mapping | Use `-p 5003:5003` not `-p 5003:5000` |
+| LID works, STT empty | Cloud auth failed | Verify `AZURE_SPEECH_KEY` and `AZURE_SPEECH_REGION` |
+| 401 Authentication error | Wrong key/region | Check Azure Portal for correct values |
+| Container won't start | Port in use | `docker rm -f speech-lid` then retry |
+
+### Stop Containers
+
+```pwsh
+docker stop speech-lid
+# Or remove completely
+docker rm -f speech-lid
+```
+
 ## Run the LID Container
 
 You only need the LID container for this live mode. (STT containers are not required unless you use hybrid scripts.)
