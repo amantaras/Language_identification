@@ -83,11 +83,11 @@
       "transcript": "Hello, thank you for calling. How can I help you today? What happened?",
       "finals": [
         {
-          "t": 1768829703.076053,
+          "t": 1768829912.6595213,
           "text": ""
         },
         {
-          "t": 1768829706.9627886,
+          "t": 1768829916.6417475,
           "text": "Hello, thank you for calling. How can I help you today? What happened?"
         }
       ]
@@ -99,7 +99,7 @@
       "transcript": "لديه مشكلة في تسجيل الدخول إلى حسابي.",
       "finals": [
         {
-          "t": 1768829710.4929733,
+          "t": 1768829920.209295,
           "text": "لديه مشكلة في تسجيل الدخول إلى حسابي."
         }
       ]
@@ -111,7 +111,7 @@
       "transcript": "Can you tell me what the error message you're seeing that HA?",
       "finals": [
         {
-          "t": 1768829713.9686627,
+          "t": 1768829923.7177079,
           "text": "Can you tell me what the error message you're seeing that HA?"
         }
       ]
@@ -123,7 +123,7 @@
       "transcript": "تظهر لي رسالة تقول إن كلمة المرور غير صحيحة all.",
       "finals": [
         {
-          "t": 1768829718.6183012,
+          "t": 1768829928.4987853,
           "text": "تظهر لي رسالة تقول إن كلمة المرور غير صحيحة all."
         }
       ]
@@ -135,7 +135,7 @@
       "transcript": "Let me check your account. What's your e-mail address?",
       "finals": [
         {
-          "t": 1768829722.2023802,
+          "t": 1768829932.1477625,
           "text": "Let me check your account. What's your e-mail address?"
         }
       ]
@@ -147,7 +147,7 @@
       "transcript": "آه، بريدي الإلكتروني هو أحمد وان تو ثري.",
       "finals": [
         {
-          "t": 1768829725.78526,
+          "t": 1768829935.7663329,
           "text": "آه، بريدي الإلكتروني هو أحمد وان تو ثري."
         }
       ]
@@ -159,7 +159,7 @@
       "transcript": "At example.com. Thanks one moment while I look into it.",
       "finals": [
         {
-          "t": 1768829732.4032502,
+          "t": 1768829942.5518217,
           "text": "At example.com. Thanks one moment while I look into it."
         }
       ]
@@ -171,7 +171,7 @@
       "transcript": "حسنا، شكرا لك.",
       "finals": [
         {
-          "t": 1768829733.846555,
+          "t": 1768829943.9863977,
           "text": "حسنا، شكرا لك."
         }
       ]
@@ -183,7 +183,7 @@
       "transcript": "Look, I've reset your password. You'll get an e-mail shortly with the instructions moment.",
       "finals": [
         {
-          "t": 1768829739.4390113,
+          "t": 1768829949.6201408,
           "text": "Look, I've reset your password. You'll get an e-mail shortly with the instructions moment."
         }
       ]
@@ -195,7 +195,7 @@
       "transcript": "ممتاز، شكرا جزيلا ويلكومب.",
       "finals": [
         {
-          "t": 1768829742.956966,
+          "t": 1768829953.1667051,
           "text": "ممتاز، شكرا جزيلا ويلكومب."
         }
       ]
@@ -207,7 +207,7 @@
       "transcript": "Let us know if you need anything else.",
       "finals": [
         {
-          "t": 1768829745.4233468,
+          "t": 1768829955.6363595,
           "text": "Let us know if you need anything else."
         }
       ]
@@ -219,7 +219,7 @@
       "transcript": "أكيد، شكرا مرة ثانيه.",
       "finals": [
         {
-          "t": 1768829748.7915795,
+          "t": 1768829959.272002,
           "text": "أكيد، شكرا مرة ثانيه."
         }
       ]

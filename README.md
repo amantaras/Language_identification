@@ -129,12 +129,24 @@ SPEECH_API_KEY=your_container_api_key
 AZURE_SPEECH_KEY=your_cloud_speech_key
 AZURE_SPEECH_REGION=eastus2
 
-# LID protocol: ws (WebSocket) or http
+# LID protocol (see options below)
 LID_PROTOCOL=ws
 
 # Container ports
 LID_PORT=5003
 ```
+
+#### LID_PROTOCOL Options
+
+| Value | Protocol | Description |
+|-------|----------|-------------|
+| `ws` | WebSocket | Recommended for real-time streaming (default in sample) |
+| `websocket` | WebSocket | Alias for `ws` |
+| `wss` | WebSocket Secure | Use for TLS-encrypted WebSocket connections |
+| `http` | HTTP | REST-based communication (code default if not set) |
+| `https` | HTTPS | Use for TLS-encrypted HTTP connections |
+
+> **Recommendation**: Use `ws` (WebSocket) for best real-time performance with the LID container.
 
 > **Important**: The LID container listens on port 5003 internally. Use port mapping `5003:5003`.
 
